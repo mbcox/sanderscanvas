@@ -3,7 +3,8 @@
               padding: 15px;
               border: 1px solid #dedede;
               background-color: #147FD7;
-              color: white;              
+              color: white;    
+              min-height: 100px;          
           }
 
           body, button {
@@ -12,10 +13,7 @@
           }
 
           button {
+              padding: 1em;
               width: 100%;
-          }
-
-          * {
-              font-family: JubilatWeb, FreightSansWeb, Verdana
           }
       </style><iron-selector attr-for-selected="name" selected="{{selected}}"><div name="first"><button on-tap="toggle" data-page="first">First Section</button><iron-collapse id="first" opened$="{{isSelected('first', selected)}}"><div class="collapse-content">Content goes here...</div></iron-collapse></div><div name="second"><button on-tap="toggle" data-page="second">Second Section</button><iron-collapse id="second" opened$="{{isSelected('second', selected)}}"><div class="collapse-content">Content goes here...</div></iron-collapse></div><div name="third"><button on-tap="toggle" data-page="third">Third Section</button><iron-collapse id="third" opened$="{{isSelected('third', selected)}}"><div class="collapse-content">Content goes here...</div></iron-collapse></div><div name="fourth"><button on-tap="toggle" data-page="fourth">Fourth Section</button><iron-collapse id="fourth" opened$="{{isSelected('fourth', selected)}}"><div class="collapse-content">Content goes here...</div></iron-collapse></div><div name="fifth"><button on-tap="toggle" data-page="fifth">Fifth Section</button><iron-collapse id="fifth" opened$="{{isSelected('fifth', selected)}}"><div class="collapse-content">Content goes here...</div></iron-collapse></div></iron-selector><paper-toast id="toast"><span class="toast-hide-button" role="button" tabindex="0" onclick="app.$.toast.hide()">Ok</span></paper-toast></template><script src="scripts/app.js"></script></body></html>
