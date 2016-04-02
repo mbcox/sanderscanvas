@@ -1,0 +1,51 @@
+﻿<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="my-canvas">
+    <template>
+        <style>
+          .collapse-content {
+              padding: 15px;
+              border: 1px solid #dedede;
+          }
+        </style>
+        
+        <button on-tap="toggle" data-page="first">toggle collapse</button>
+
+        <iron-collapse id="first">
+            <div class="collapse-content">Content goes here...</div>
+        </iron-collapse>
+
+        <iron-collapse id="second">
+            <div class="collapse-content">Content goes here...</div>
+        </iron-collapse>
+        
+    </template>
+    <script>
+        (function () {
+            'use strict';
+
+            Polymer({
+                is: 'my-canvas',
+
+                properties: {
+                    items: {
+                        type: Array,
+                        notify: true
+                    }
+                },
+
+                ready: function () {
+                    this.items = [
+                        'Test 1',
+                        'Test 2'
+                    ];
+                },
+
+                toggle: function (e) {
+                    var page = e.target.getAttribute('data-page');
+                    this.$.first.toggle();
+                }
+            })
+        })();
+    </script>
+</dom-module>
