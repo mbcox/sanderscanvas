@@ -16,3 +16,25 @@ body {
 .page-title {
   outline: none;
 }
+
+@font-face {
+    font-family: JubilatWeb;
+    src: url("../fonts/jubilat-regular-webfont.ttf");
+}
+
+@font-face {
+    font-family: JubilatWeb;
+    src: url("../fonts/jubilat-bold-webfont.ttf");
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: FreightSansWeb;
+    src: url("../fonts/freight-sans-book-opentype.otf");
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: FreightSansWeb;
+    src: url("../fonts/freight-sans-light-opentype.otf");
+}
