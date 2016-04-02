@@ -1,0 +1,20 @@
+﻿
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+
+<dom-module id="my-accordion">    
+    <template>
+        <iron-selector attr-for-selected="name" selected="{{selected}}">
+            <template is="dom-repeat" items="{{items}}">
+                <div name="{{item.key}}">
+                    <button on-tap="toggle" data-page="{{item.key}}">{{item.title}}</button>
+                    <iron-collapse id="{{item.key}}" opened$="{{isSelected(item.key, selected)}}">
+                        <div class="collapse-content"><content select="{{getContentKey(item.key)}}"></content></div>
+                    </iron-collapse>
+                </div>
+            </template>
+        </iron-selector>
+    </template>
+
+    <script src="my-accordion.js"></script>
+</dom-module>

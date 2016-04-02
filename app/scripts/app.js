@@ -87,6 +87,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
 
   app.selected = "first";
+  app.secondSelected = "secondFirst";
 
   app.isSelected = function (section, selected) {
       return section === selected;
