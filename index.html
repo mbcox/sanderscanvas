@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="description" content=""><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Polymer Starter Kit"><title>Sanders Canvassing</title><meta name="theme-color" content="#2E3AA1"><link rel="manifest" href="manifest.json"><meta name="msapplication-TileColor" content="#3372DF"><meta name="mobile-web-app-capable" content="yes"><meta name="application-name" content="PSK"><link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="apple-mobile-web-app-title" content="Polymer Starter Kit"><link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png"><meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png"><link rel="stylesheet" href="styles/main.css"><script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script><link rel="import" href="elements/elements.html"><style is="custom-style" include="shared-styles"></style></head><body unresolved=""><span id="browser-sync-binding"></span><template is="dom-bind" id="app"><style>
+          .collapse-content {
+              padding: 15px;
+              border: 1px solid #dedede;
+              background-color: #147FD7;
+              color: white;
+          }
+
+          body, button {
+              background-color: #147FD7;
+              color: white;
+          }
+
+          * {
+              font-family: JubilatWeb, FreightSansWeb, Verdana
+          }
+      </style><button on-tap="toggle" data-page="first">First Section</button><iron-collapse id="first"><div class="collapse-content">Content goes here...</div></iron-collapse><button on-tap="toggle" data-page="second">Second Section</button><iron-collapse id="second"><div class="collapse-content">Content goes here...</div></iron-collapse><button on-tap="toggle" data-page="third">Third Section</button><iron-collapse id="third"><div class="collapse-content">Content goes here...</div></iron-collapse><button on-tap="toggle" data-page="fourth">Fourth Section</button><iron-collapse id="fourth"><div class="collapse-content">Content goes here...</div></iron-collapse><button on-tap="toggle" data-page="fifth">Fifth Section</button><iron-collapse id="fifth"><div class="collapse-content">Content goes here...</div></iron-collapse><paper-toast id="toast"><span class="toast-hide-button" role="button" tabindex="0" onclick="app.$.toast.hide()">Ok</span></paper-toast></template><script src="scripts/app.js"></script></body></html>
