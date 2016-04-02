@@ -7,16 +7,6 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-body {
-  background: #fafafa;
-  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  color: #333;
-}
-
-.page-title {
-  outline: none;
-}
-
 @font-face {
     font-family: JubilatWeb;
     src: url("../fonts/jubilat-regular-webfont.ttf");
@@ -37,4 +27,14 @@ body {
 @font-face {
     font-family: FreightSansWeb;
     src: url("../fonts/freight-sans-light-opentype.otf");
+}
+
+body {
+  background: #fafafa;
+  font-family: JubilatWeb, FreightSansWeb, 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #333;
+}
+
+.page-title {
+  outline: none;
 }

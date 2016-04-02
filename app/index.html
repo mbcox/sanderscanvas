@@ -68,10 +68,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <style>
           .collapse-content {
-              padding: 15px;
-              border: 1px solid #dedede;
+              padding: 15px;              
               background-color: #147FD7;
-              color: white;              
+              color: white;    
+              min-height: 100px;          
           }
 
           body, button {
@@ -80,11 +80,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
 
           button {
+              padding: 1em;
               width: 100%;
-          }
-
-          * {
-              font-family: JubilatWeb, FreightSansWeb, Verdana
+              font-weight: bold;
           }
       </style>
       
@@ -92,7 +90,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div name="first">
               <button on-tap="toggle" data-page="first">First Section</button>
               <iron-collapse id="first" opened$="{{isSelected('first', selected)}}">
-                  <div class="collapse-content">Content goes here...</div>
+                  <div class="collapse-content"><img src="images/Congress-03.png" /></div>
               </iron-collapse>
           </div>
 
