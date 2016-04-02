@@ -84,5 +84,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       if (toggleSection != null) {
           toggleSection.toggle();
       }
-    }
+  }
+
+  app.selected = "first";
+
+  app.isSelected = function (section, selected) {
+      return section === selected;
+  }
 })(document);
