@@ -12589,19 +12589,36 @@ this.fire('dom-change');
           font-size: 24px!important;
         }
       }
+      
+    paper-button {
+        padding: 1em;
+        width: 100%;
+        font-weight: bold;
+        margin: 0;
+    }
+
+
+      .collapse-content {
+        padding: 15px;              
+        min-height: 100px;          
+        text-align:center;
+      }          
+
+      .topcontent {
+          background-color: #C2F2FA;
+      }
+
+      .subcontent {          
+          background-color: rgba(255,255,255,0.35);
+      }
     </style>
   </template>
 </dom-module>
 
-
-<dom-module id="my-accordion" assetpath="my-accordion/">    
+<dom-module id="my-accordion" assetpath="my-accordion/">
     <template>
-        <style>
-            .title {
-                background-color: var(--my-accordion-background-color, #C2F2FA);
-            }
-        </style>        
-        <div class="title">
+        <style is="custom-style" include="shared-styles"></style>
+        <div class$="{{getCssClass(nested)}}">
             <iron-selector attr-for-selected="name" selected="{{selected}}">
                 <div on-selected="heard">
                     <content></content>
@@ -12624,7 +12641,8 @@ this.fire('dom-change');
             selected: {
                 type: String,
                 notify: true
-            }
+            },
+            nested: Boolean
         },
 
         //attached: function () {
@@ -12637,13 +12655,18 @@ this.fire('dom-change');
                 pages[i].set('isSelected', pages[i].key === detail.key);
             }
             e.cancelBubble = true;
+        },
+
+        getCssClass: function (nested) {
+            return nested ? "subcontent" : "topcontent";
         }
     });
 })();</script>
 </dom-module><dom-module id="my-accordion-page" assetpath="my-accordion-page/">
     <template>                
+        <style is="custom-style" include="shared-styles"></style>
         <div name="{{key}}">
-            <paper-button raised="" on-tap="toggle">{{title}}</paper-button>
+            <paper-button raised="" noink="" on-tap="toggle">{{title}}</paper-button>
             <iron-collapse id="panel" opened$="{{isSelected}}">
                 <div class="collapse-content"><content></content></div>
             </iron-collapse>
