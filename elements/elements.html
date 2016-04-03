@@ -12644,9 +12644,19 @@ this.fire('dom-change');
             nested: Boolean
         },
 
-        //attached: function () {
-        //    this.heard({}, { key: this.selected }, null);
-        //},
+        attached: function () {
+            //this.heard({}, { key: this.selected }, null);
+            var el = Polymer.dom(this).parentNode;
+            while (el != null)
+            {
+                if (el.tagName != null && el.tagName.toLowerCase() === 'my-accordion')
+                {
+                    this.set('nested', true);
+                    break;
+                }
+                el = el.parentNode;
+            }
+        },
 
         heard: function (e, detail, sender) {
             var pages = this.queryAllEffectiveChildren('my-accordion-page');
@@ -12664,8 +12674,39 @@ this.fire('dom-change');
 </dom-module><dom-module id="my-accordion-page" assetpath="my-accordion-page/">
     <template>                
         <style is="custom-style" include="shared-styles"></style>
+        <style is="custom-style">
+            :host {
+
+                --paper-button-raised-keyboard-focus:
+                {
+                    font-weight: normal;
+                };
+
+                --paper-button-flat-keyboard-focus::after {
+                    font-weight: normal;
+                };
+                --paper-button: {
+                     border: 1px solid black;
+                     text-transform: inherit;
+                };
+                --iron-icon-fill-color: #FF336C;
+            }
+
+            iron-collapse {
+                border: 1px solid black;
+            }
+        </style>
         <div name="{{key}}">
-            <paper-button raised="" noink="" on-tap="toggle">{{title}}</paper-button>
+            <paper-button raised="" noink="" on-tap="toggle" testattr$="{{isSelected}}">
+                <span><span>{{title}}</span>
+                <template is="dom-if" if="{{showDropDown(isSelected, isOpened)}}">
+                    <iron-icon icon="icons:arrow-drop-down"></iron-icon>
+                </template>
+                <template is="dom-if" if="{{!showDropDown(isSelected, isOpened)}}">
+                    <iron-icon icon="icons:arrow-drop-up"></iron-icon>
+                </template>                
+                </span>
+            </paper-button>
             <iron-collapse id="panel" opened$="{{isSelected}}">
                 <div class="collapse-content"><content></content></div>
             </iron-collapse>
@@ -12681,12 +12722,24 @@ this.fire('dom-change');
         properties: {
             key: String,
             title: String,
-            isSelected: Boolean
+            isSelected: {
+                type: Boolean,
+                value: false
+            },
+            isOpened: {
+                type: Boolean,
+                value: true
+            }
         },
 
         toggle: function () {
             this.$.panel.toggle();
-            this.fire('selected', { key: this.key });
+            this.isOpened = this.$.panel.opened;
+            this.fire('selected', { key: this.key });            
+        },
+
+        showDropDown: function (selected, isOpened) {
+            return !selected || !isOpened;
         }
     });
 })();</script>
