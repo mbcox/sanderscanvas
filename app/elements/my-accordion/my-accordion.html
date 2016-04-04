@@ -1,19 +1,19 @@
 ﻿
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<!--<link rel="import" href="../../bower_components/paper-button/paper-button.html">-->
+<link rel="import" href="../../styles/shared-styles.html" />
 
-<dom-module id="my-accordion">    
+<dom-module id="my-accordion">
     <template>
-        <iron-selector attr-for-selected="name" selected="{{selected}}">
-            <template is="dom-repeat" items="{{items}}">
-                <div name="{{item.key}}">
-                    <button on-tap="toggle" data-page="{{item.key}}">{{item.title}}</button>
-                    <iron-collapse id="{{item.key}}" opened$="{{isSelected(item.key, selected)}}">
-                        <div class="collapse-content"><content select="{{getContentKey(item.key)}}"></content></div>
-                    </iron-collapse>
+        <style is="custom-style" include="shared-styles"></style>
+        <div class$="{{getCssClass(nested)}}">
+            <iron-selector attr-for-selected="name" selected="{{selected}}">
+                <div on-selected="heard">
+                    <content></content>
                 </div>
-            </template>
-        </iron-selector>
+            </iron-selector>
+        </div>
     </template>
 
     <script src="my-accordion.js"></script>

@@ -91,5 +91,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   app.isSelected = function (section, selected) {
       return section === selected;
-  }
+  };
+
+  app.onSelected = function (e, detail, sender) {
+      app.selected = detail.key;
+  };
 })(document);

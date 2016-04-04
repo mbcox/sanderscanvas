@@ -1,0 +1,62 @@
+﻿<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../styles/shared-styles.html">
+
+
+<dom-module id="my-accordion-page">
+    <template>                
+        <style is="custom-style" include="shared-styles"></style>
+        <style is="custom-style">
+            :host {
+
+                --paper-button-raised-keyboard-focus:
+                {
+                    font-weight: normal;
+                };
+
+                --paper-button-flat-keyboard-focus::after {
+                    font-weight: normal;
+                };
+
+                --paper-button: {
+                     border-top: 1px solid #353535;
+                     border-left: 1px solid #353535;
+                     border-right: 1px solid #353535;
+                     border-bottom: 1px solid #353535;
+                     text-transform: inherit;
+                };
+                --iron-icon-fill-color: #FF336C;
+            }
+
+            iron-collapse {
+                     border-top: 0;
+                     border-left: 1px solid gray;
+                     border-right: 1px solid black;
+                     border-bottom: 1px solid black;                     
+            }
+
+            .noTopBorder {
+                border-top: 0;
+            }
+        </style>
+        <div name="{{key}}">
+            <paper-button class$="{{isFirst(key)}}" flat noink on-tap="toggle" testAttr$="{{isSelected}}">
+                <span><span>{{title}}</span>
+                <template is="dom-if" if="{{showDropDown(isSelected, isOpened)}}">
+                    <iron-icon icon="icons:arrow-drop-down"></iron-icon>
+                </template>
+                <template is="dom-if" if="{{!showDropDown(isSelected, isOpened)}}">
+                    <iron-icon icon="icons:arrow-drop-up"></iron-icon>
+                </template>                
+                </span>
+            </paper-button>
+            <iron-collapse id="panel" opened$="{{isSelected}}">
+                <div class="collapse-content"><content></content></div>
+            </iron-collapse>
+        </div>
+    </template>
+
+    <script src="my-accordion-page.js"></script>
+</dom-module>
