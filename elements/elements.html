@@ -12699,24 +12699,28 @@ this.fire('dom-change');
                 };
 
                 --paper-button: {
-                     border-top: 1px solid gray;
-                     border-left: 1px solid gray;
-                     border-right: 1px solid black;
-                     border-bottom: 1px solid black;
+                     border-top: 1px solid #353535;
+                     border-left: 1px solid #353535;
+                     border-right: 1px solid #353535;
+                     border-bottom: 1px solid #353535;
                      text-transform: inherit;
                 };
                 --iron-icon-fill-color: #FF336C;
             }
 
             iron-collapse {
-                     border-top: 1px solid gray;
+                     border-top: 0;
                      border-left: 1px solid gray;
                      border-right: 1px solid black;
-                     border-bottom: 1px solid black;
+                     border-bottom: 1px solid black;                     
+            }
+
+            .noTopBorder {
+                border-top: 0;
             }
         </style>
         <div name="{{key}}">
-            <paper-button flat="" noink="" on-tap="toggle" testattr$="{{isSelected}}">
+            <paper-button class$="{{isFirst(key)}}" flat="" noink="" on-tap="toggle" testattr$="{{isSelected}}">
                 <span><span>{{title}}</span>
                 <template is="dom-if" if="{{showDropDown(isSelected, isOpened)}}">
                     <iron-icon icon="icons:arrow-drop-down"></iron-icon>
@@ -12765,6 +12769,10 @@ this.fire('dom-change');
 
         showDropDown: function (selected, isOpened) {
             return !selected || !isOpened;
+        },
+
+        isFirst: function (key) {
+            return key !== "1" ? "noTopBorder" : "";
         }
     });
 })();</script>
