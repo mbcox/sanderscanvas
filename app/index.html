@@ -72,7 +72,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               background-color: inherit;
           }
 
-          paper-button.cusomLink {
+          paper-button.customLink {
             --paper-button-raised-keyboard-focus:
             {
                 font-weight: normal;
@@ -83,12 +83,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
             
             --paper-button: {
-                    border-top: 0;
-                    border-left: 1px solid #353535;
-                    border-right: 1px solid #353535;
-                    border-bottom: 1px solid #353535;
-                    text-transform: inherit;
-                    box-shadow: none;
+                border-top: 0;
+                border-left: 1px solid #353535;
+                border-right: 1px solid #353535;
+                border-bottom: 1px solid #353535;
+                text-transform: inherit;
+                /* TODO: Figure out how to get rid of this !important */
+                font-weight: normal !important;                  
             }
           }
 
@@ -118,7 +119,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </my-accordion>
           </my-accordion-page>
           <a href="http://www.bernietax.com/#0.0" target="_blank" class="inherit">
-              <paper-button flat noink title="Test link" class="cusomLink">Test link<iron-icon class="customLink" icon="icons:launch"></iron-icon></paper-button>
+              <paper-button flat noink title="Test link" class="customLink">Test link<iron-icon class="customLink" icon="icons:launch"></iron-icon></paper-button>
           </a>          
           <my-accordion-page key="3" title="Will Bernie raise my taxes?">
               <img src="images/page3.png" usemap="#taxes"/>

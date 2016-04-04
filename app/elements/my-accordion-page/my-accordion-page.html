@@ -11,8 +11,7 @@
         <style is="custom-style">
             :host {
 
-                --paper-button-raised-keyboard-focus:
-                {
+                --paper-button-raised-keyboard-focus: {
                     font-weight: normal;
                 };
 
@@ -25,7 +24,9 @@
                      border-left: 1px solid #353535;
                      border-right: 1px solid #353535;
                      border-bottom: 1px solid #353535;
-                     text-transform: inherit;
+                     text-transform: inherit;   
+                     /* TODO: Figure out how to get rid of this !important */
+                     font-weight: normal !important;                  
                 };
                 --iron-icon-fill-color: #FF336C;
             }
