@@ -12618,7 +12618,7 @@ this.fire('dom-change');
 <dom-module id="my-accordion" assetpath="my-accordion/">
     <template>
         <style is="custom-style" include="shared-styles"></style>
-        <div class$="{{getCssClass(nested)}}">
+        <div id="mainDiv" class$="{{getCssClass(nested)}}">
             <iron-selector attr-for-selected="name" selected="{{selected}}">
                 <div on-selected="heard">
                     <content></content>
@@ -12662,9 +12662,17 @@ this.fire('dom-change');
         heard: function (e, detail, sender) {
             var pages = this.queryAllEffectiveChildren('my-accordion-page');
             for (var i = 0; i < pages.length; i++) {
-                pages[i].set('isSelected', pages[i].key === detail.key);
+                var selected = pages[i].key === detail.key;
+                pages[i].set('isSelected', selected); //pages[i].key === detail.key);
+                //if (selected) {
+                //    var selPage = pages[i];
+                //    this.async(function () {
+                //        var rect = selPage.getBoundingClientRect();
+                //        window.scrollTo(0, rect.top);
+                //    }, 250);
+                //}
             }
-            e.cancelBubble = true;
+            e.cancelBubble = true;            
         },
 
         getCssClass: function (nested) {
@@ -12672,7 +12680,7 @@ this.fire('dom-change');
         },
 
         closeAll: function () {
-            this.async(this.closeAllAsync, null, 100);
+            this.async(this.closeAllAsync, 100);
         },
 
         closeAllAsync: function () {
@@ -12680,7 +12688,7 @@ this.fire('dom-change');
             for (var i = 0; i < pages.length; i++) {
                 pages[i].set('isSelected', false);
             }
-        }
+        }        
     });
 })();</script>
 </dom-module><dom-module id="my-accordion-page" assetpath="my-accordion-page/">
@@ -12765,7 +12773,7 @@ this.fire('dom-change');
                 for (var i = 0; i < subPanels.length; i++) {
                     subPanels[i].closeAll();
                 }
-            }
+            } 
         },
 
         showDropDown: function (selected, isOpened) {
