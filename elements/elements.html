@@ -12668,6 +12668,17 @@ this.fire('dom-change');
 
         getCssClass: function (nested) {
             return nested ? "subcontent" : "topcontent";
+        },
+
+        closeAll: function () {
+            this.async(this.closeAllAsync, null, 100);
+        },
+
+        closeAllAsync: function () {
+            var pages = this.queryAllEffectiveChildren('my-accordion-page');
+            for (var i = 0; i < pages.length; i++) {
+                pages[i].set('isSelected', false);
+            }
         }
     });
 })();</script>
@@ -12742,7 +12753,13 @@ this.fire('dom-change');
         toggle: function () {
             this.$.panel.toggle();
             this.isOpened = this.$.panel.opened;
-            this.fire('selected', { key: this.key });            
+            this.fire('selected', { key: this.key });
+            var subPanels = this.queryAllEffectiveChildren('my-accordion');
+            if (!this.isOpened) {
+                for (var i = 0; i < subPanels.length; i++) {
+                    subPanels[i].closeAll();
+                }
+            }
         },
 
         showDropDown: function (selected, isOpened) {
