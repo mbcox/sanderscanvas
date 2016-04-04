@@ -7,7 +7,7 @@
 <dom-module id="my-accordion">
     <template>
         <style is="custom-style" include="shared-styles"></style>
-        <div class$="{{getCssClass(nested)}}">
+        <div id="mainDiv" class$="{{getCssClass(nested)}}">
             <iron-selector attr-for-selected="name" selected="{{selected}}">
                 <div on-selected="heard">
                     <content></content>

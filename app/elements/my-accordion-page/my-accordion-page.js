@@ -26,7 +26,7 @@
                 for (var i = 0; i < subPanels.length; i++) {
                     subPanels[i].closeAll();
                 }
-            }
+            } 
         },
 
         showDropDown: function (selected, isOpened) {
