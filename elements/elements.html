@@ -12590,20 +12590,6 @@ this.fire('dom-change');
         }
       }
       
-    paper-button {
-        padding: 1em;
-        width: 100%;        
-        margin: 0;
-        border-radius: 0;
-    }
-
-
-      .collapse-content {
-        padding: 15px;              
-        min-height: 100px;          
-        text-align:center;
-      }          
-
       .topcontent {
           background-color: #C2F2FA;
       }
@@ -12664,13 +12650,15 @@ this.fire('dom-change');
             for (var i = 0; i < pages.length; i++) {
                 var selected = pages[i].key === detail.key;
                 pages[i].set('isSelected', selected); //pages[i].key === detail.key);
-                //if (selected) {
-                //    var selPage = pages[i];
-                //    this.async(function () {
-                //        var rect = selPage.getBoundingClientRect();
-                //        window.scrollTo(0, rect.top);
-                //    }, 250);
-                //}
+                //console.log('drawer ' + pages[i].key + ' ' + selected);
+                if (selected) {
+                    var selPage = pages[i];
+                    this.async(function () {
+                        var rect = this.absolutePosition(selPage); // selPage.getBoundingClientRect();
+                        //console.log('Scroll to: ' + rect.top);
+                        window.scrollTo(0, rect.top - 1);
+                    }, 300);
+                }
             }
             e.cancelBubble = true;            
         },
@@ -12688,7 +12676,40 @@ this.fire('dom-change');
             for (var i = 0; i < pages.length; i++) {
                 pages[i].set('isSelected', false);
             }
-        }        
+        },
+
+        absolutePosition: function (el) {
+            var
+        found,
+        left = 0,
+        top = 0,
+        width = 0,
+        height = 0,
+        offsetBase = el.offsetBase;
+            if (!offsetBase && document.body) {
+                offsetBase = el.offsetBase = document.createElement('div');
+                offsetBase.style.cssText = 'position:absolute;left:0;top:0';
+                document.body.appendChild(offsetBase);
+            }
+            if (el && el.ownerDocument === document && 'getBoundingClientRect' in el && offsetBase) {
+                var boundingRect = el.getBoundingClientRect();
+                var baseRect = offsetBase.getBoundingClientRect();
+                found = true;
+                left = boundingRect.left - baseRect.left;
+                top = boundingRect.top - baseRect.top;
+                width = boundingRect.right - boundingRect.left;
+                height = boundingRect.bottom - boundingRect.top;
+            }
+            return {
+                found: found,
+                left: left,
+                top: top,
+                width: width,
+                height: height,
+                right: left + width,
+                bottom: top + height
+            };
+        }
     });
 })();</script>
 </dom-module><dom-module id="my-accordion-page" assetpath="my-accordion-page/">
@@ -12706,30 +12727,50 @@ this.fire('dom-change');
                 };
 
                 --paper-button: {
-                     border-top: 1px solid #353535;
-                     border-left: 1px solid #353535;
-                     border-right: 1px solid #353535;
-                     border-bottom: 1px solid #353535;
+                     border-top: 1px solid #070042;
+                     border-left: 1px solid #070042;
+                     border-right: 1px solid #070042;
+                     border-bottom: 1px solid #070042;                     
+                     border-radius: 0;
+                     height: 80px;
+                     color: #070042;
+                     font-family: FreightSansWeb;
+                     font-weight: bold;
+                     font-size: 17pt;
                      text-transform: inherit;   
-                     /* TODO: Figure out how to get rid of this !important */
-                     font-weight: normal !important;                  
+                     @apply(--layout-vertical); 
+                     @apply(--layout-center-center);
+                     margin: 0;     
+                     padding-left: 50px;
+                     padding-right: 50px;   
+                     /*
+                         border: 0;
+                         background: linear-gradient(#C2F2FA, #356aa0);
+
+                     */
                 };
                 --iron-icon-fill-color: #FF336C;
             }
 
             iron-collapse {
-                     border-top: 0;
-                     border-left: 1px solid gray;
-                     border-right: 1px solid black;
-                     border-bottom: 1px solid black;                     
+                border-top: 0;
+                border-left: 1px solid #070042;
+                border-right: 1px solid #070042;
+                border-bottom: 1px solid #070042;                     
             }
 
             .noTopBorder {
                 border-top: 0;
             }
+
+            .collapse-content {
+            padding: 15px;           
+            min-height: 100px;          
+            text-align:center;
+            }          
         </style>
         <div name="{{key}}">
-            <paper-button class$="{{isFirst(key)}}" flat="" noink="" on-tap="toggle" testattr$="{{isSelected}}">
+            <paper-button center-center="" class$="{{isFirst(key)}}" flat="" noink="" on-tap="toggle" testattr$="{{isSelected}}">
                 <span><span>{{title}}</span>
                 <template is="dom-if" if="{{showDropDown(isSelected, isOpened)}}">
                     <iron-icon icon="icons:arrow-drop-down"></iron-icon>
@@ -12739,7 +12780,7 @@ this.fire('dom-change');
                 </template>                
                 </span>
             </paper-button>
-            <iron-collapse id="panel" opened$="{{isSelected}}">
+            <iron-collapse noanimation="" id="panel" opened$="{{isSelected}}">
                 <div class="collapse-content"><content></content></div>
             </iron-collapse>
         </div>
