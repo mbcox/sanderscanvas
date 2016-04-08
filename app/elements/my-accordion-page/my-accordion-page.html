@@ -20,42 +20,81 @@
                 };
 
                 --paper-button: {
-                     border-top: 1px solid #353535;
-                     border-left: 1px solid #353535;
-                     border-right: 1px solid #353535;
-                     border-bottom: 1px solid #353535;
+                     border-top: 1px solid #070042;
+                     border-left: 1px solid #070042;
+                     border-right: 1px solid #070042;
+                     border-bottom: 1px solid #070042;                     
+                     border-radius: 0;
+                     /*min-height: 80px;*/
+                     color: #070042;
+                     font-family: FreightSansWeb;
+                     font-weight: bold;
+                     font-size: 15pt;
                      text-transform: inherit;   
-                     /* TODO: Figure out how to get rid of this !important */
-                     font-weight: normal !important;                  
+                     @apply(--layout-vertical); 
+                     @apply(--layout-center-center);
+                     margin: 0;     
+                     /*
+                     padding-left: 50px;
+                     padding-right: 50px;
+                         */
+                     padding: 40px;   
+                     /*
+                         border: 0;
+                         background: linear-gradient(#C2F2FA, #356aa0);
+
+                     */
                 };
                 --iron-icon-fill-color: #FF336C;
             }
 
             iron-collapse {
-                     border-top: 0;
-                     border-left: 1px solid gray;
-                     border-right: 1px solid black;
-                     border-bottom: 1px solid black;                     
+                border-top: 0;
+                border-left: 1px solid #070042;
+                border-right: 1px solid #070042;
+                border-bottom: 1px solid #070042;                     
             }
 
             .noTopBorder {
                 border-top: 0;
             }
+
+            .collapse-content {
+            padding: 15px;           
+            min-height: 100px;          
+            text-align:center;
+            }    
+            .drawerLink {
+                text-decoration: none;
+            }      
         </style>
         <div name="{{key}}">
-            <paper-button class$="{{isFirst(key)}}" flat noink on-tap="toggle" testAttr$="{{isSelected}}">
-                <span><span>{{title}}</span>
-                <template is="dom-if" if="{{showDropDown(isSelected, isOpened)}}">
-                    <iron-icon icon="icons:arrow-drop-down"></iron-icon>
-                </template>
-                <template is="dom-if" if="{{!showDropDown(isSelected, isOpened)}}">
-                    <iron-icon icon="icons:arrow-drop-up"></iron-icon>
-                </template>                
-                </span>
-            </paper-button>
-            <iron-collapse id="panel" opened$="{{isSelected}}">
-                <div class="collapse-content"><content></content></div>
-            </iron-collapse>
+            <template is="dom-if" if="{{isLink(linkUrl)}}">
+                <a class="drawerLink" href="{{linkUrl}}" target="_blank">
+                    <paper-button center-center class$="{{isFirst(key)}}" flat noink testAttr$="{{isSelected}}">
+                        <span class="drawer-container">
+                            <span>{{title}}</span>
+                            <iron-icon class="drawer-icon" icon="icons:open-in-browser"></iron-icon>
+                        </span>
+                    </paper-button>
+                </a>                
+            </template>
+            <template is="dom-if" if="{{!isLink(linkUrl)}}">
+                <paper-button center-center class$="{{isFirst(key)}}" flat noink on-tap="toggle" testAttr$="{{isSelected}}">
+                    <span class="drawer-container">
+                        <span>{{title}}</span>
+                        <template is="dom-if" if="{{showDropDown(isSelected, isOpened)}}">
+                            <iron-icon class="drawer-icon" icon="icons:arrow-drop-down"></iron-icon>
+                        </template>
+                        <template is="dom-if" if="{{!showDropDown(isSelected, isOpened)}}">
+                            <iron-icon class="drawer-icon" icon="icons:arrow-drop-up"></iron-icon>
+                        </template>
+                    </span>
+                </paper-button>
+                <iron-collapse noAnimation id="panel" opened$="{{isSelected}}">
+                    <div class="collapse-content"><content></content></div>
+                </iron-collapse>
+            </template>            
         </div>
     </template>
 

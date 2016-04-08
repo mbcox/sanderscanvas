@@ -17,6 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="generator" content="Polymer Starter Kit">
   <title>Sanders Canvassing</title>
+    <link rel="shortcut icon" href="images/icon.svg" type="image/svg" />
 
   <!-- Place favicon.ico in the `app/` directory -->
 
@@ -37,8 +38,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- Add to homescreen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Polymer Starter Kit">
-  <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Sanders Canvassing">
+  <link rel="apple-touch-icon" href="images/touch/apple-touch-icon-57x57.png">
 
   <!-- Tile icon for Win8 (144x144) -->
   <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
@@ -70,6 +71,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           .inherit {
               color: inherit;
               background-color: inherit;
+          }
+
+          .padBottom {
+              margin-bottom: 50px;
           }
 
           paper-button.customLink {
@@ -106,8 +111,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <my-accordion-page key="1" title="Is Bernie even electable?">
               <img src="images/d1main.svg" alt="Electability" />
           </my-accordion-page>
-          <my-accordion-page key="2" title="(SVG) How will Bernie get Congressional support for his plans?">
-              <img src="images/d2main.svg" alt="CongressionalSupport" />
+          <my-accordion-page key="2" title="How will Bernie get Congressional support for his plans?">
+              <img src="images/d2main.svg" alt="CongressionalSupport" class="padBottom" />
               <my-accordion>
                   <my-accordion-page key="1" title="What has Bernie managed to get through Congress?">
                     <img src="images/d2subdrawer1.svg" alt="Congress" />
@@ -118,7 +123,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </my-accordion>
           </my-accordion-page>
           <my-accordion-page key="3" title="Will Bernie raise my taxes?">
-              <img src="images/d3main.svg" usemap="#taxes" alt="Taxes"/>
+              <img src="images/d3main.svg" usemap="#taxes" alt="Taxes" class="padBottom" />
               <map name="taxes">
                   <area shape="rect" coords="7,77,237,142" href="http://www.bernietax.com/#0.0" alt="TaxCalculator" target="_blank"/>
               </map>
@@ -127,7 +132,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </my-accordion>
           </my-accordion-page>
           <my-accordion-page key="4" title="How does Bernie's plan for universal health care work?">
-              <img src="images/d4main.svg" usemap="#healthcare" alt="Healthcare"/>
+              <img src="images/d4main.svg" usemap="#healthcare" alt="Healthcare" class="padBottom" />
               <map name="healthcare">
                   <area shape="rect" coords="40,313,270,379" href="http://valadian.github.io/SandersHealthcareCalculator" alt="HealtcareCalculator" target="_blank" />
               </map>
@@ -144,7 +149,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <img src="images/d5main.svg" alt="CollegePlan" />
           </my-accordion-page>
           <my-accordion-page key="6" title="Is a federal minimum wage of $15/hour too much?">
-              <img src="images/d6main.svg" alt="MinimumWage" />
+              <img src="images/d6main.svg" alt="MinimumWage" class="padBottom" />
               <my-accordion>
                   <my-accordion-page key="1" title="Is the current federal wage really a starvation wage?">
                       <img src="images/d6subdrawer1.svg" alt="StarvationWage" />
@@ -162,6 +167,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <map name="endorsements">
                   <area shape="rect" coords="39,1016,270,1081" href="https://en.wikipedia.org/wiki/List_of_Bernie_Sanders_presidential_campaign_endorsements,_2016" alt="Endorsements" target="_blank" />
               </map>
+          </my-accordion-page>          
+          <my-accordion-page key="9" title="How do I vote for Bernie?" link-url="https://vote.berniesanders.com/">
           </my-accordion-page>
       </my-accordion>
 

@@ -14,12 +14,17 @@
             isOpened: {
                 type: Boolean,
                 value: true
+            },
+            linkUrl: {
+                type: String,
+                value: null
             }
         },
 
         toggle: function () {
-            this.$.panel.toggle();
-            this.isOpened = this.$.panel.opened;
+            var panel = Polymer.dom(this.root).querySelector('iron-collapse');
+            panel.toggle();
+            this.isOpened = panel.opened;
             this.fire('selected', { key: this.key });
             var subPanels = this.queryAllEffectiveChildren('my-accordion');
             if (!this.isOpened) {
@@ -35,6 +40,10 @@
 
         isFirst: function (key) {
             return key !== "1" ? "noTopBorder" : "";
+        },
+
+        isLink: function (url) {
+            return url != null;
         }
     });
 })();
