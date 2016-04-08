@@ -12591,11 +12591,18 @@ this.fire('dom-change');
       }
       
       .topcontent {
-          background-color: #C2F2FA;
+          /*background-color: #C2F2FA;*/
       }
 
       .subcontent {          
-          background-color: rgba(255,255,255,0.35);
+          /*background-color: rgba(255,255,255,0.35);*/
+      }
+
+      .topcontent-page {          
+      }
+
+      .subcontent-page {
+          color: #344B66;
       }
 
     drawer-container {
@@ -12604,6 +12611,34 @@ this.fire('dom-change');
     }
     .drawer-icon {
         margin-right: -24px;
+    }
+
+    .drawer-1 {
+        background-color: rgba(255,255,255,0.9);
+    }
+    .drawer-2 {
+        background-color: rgba(255,255,255,0.8);
+    }
+    .drawer-3 {
+        background-color: rgba(255,255,255,0.7);
+    }
+    .drawer-4 {
+        background-color: rgba(255,255,255,0.6);
+    }
+    .drawer-5 {
+        background-color: rgba(255,255,255,0.5);
+    }
+    .drawer-6 {
+        background-color: rgba(255,255,255,0.4);
+    }
+    .drawer-7 {
+        background-color: rgba(255,255,255,0.3);
+    }
+    .drawer-8 {
+        background-color: rgba(255,255,255,0.2);
+    }
+    .drawer-9 {
+        background-color: rgba(255,255,255,0.1);
     }
     </style>
   </template>
@@ -12738,13 +12773,14 @@ this.fire('dom-change');
                      border-top: 1px solid #070042;
                      border-left: 1px solid #070042;
                      border-right: 1px solid #070042;
-                     border-bottom: 1px solid #070042;                     
+                     border-bottom: 1px solid #070042;    
+                     border: 0;                 
                      border-radius: 0;
                      /*min-height: 80px;*/
                      color: #070042;
                      font-family: FreightSansWeb;
                      font-weight: bold;
-                     font-size: 15pt;
+                     font-size: 14pt;
                      text-transform: inherit;   
                      @apply(--layout-vertical); 
                      @apply(--layout-center-center);
@@ -12753,13 +12789,14 @@ this.fire('dom-change');
                      padding-left: 50px;
                      padding-right: 50px;
                          */
-                     padding: 40px;   
+                     padding: 35px 40px ;
                      /*
                          border: 0;
                          background: linear-gradient(#C2F2FA, #356aa0);
 
                      */
                 };
+                
                 --iron-icon-fill-color: #FF336C;
             }
 
@@ -12767,7 +12804,8 @@ this.fire('dom-change');
                 border-top: 0;
                 border-left: 1px solid #070042;
                 border-right: 1px solid #070042;
-                border-bottom: 1px solid #070042;                     
+                border-bottom: 1px solid #070042;
+                border: 0;                     
             }
 
             .noTopBorder {
@@ -12786,7 +12824,7 @@ this.fire('dom-change');
         <div name="{{key}}">
             <template is="dom-if" if="{{isLink(linkUrl)}}">
                 <a class="drawerLink" href="{{linkUrl}}" target="_blank">
-                    <paper-button center-center="" class$="{{isFirst(key)}}" flat="" noink="" testattr$="{{isSelected}}">
+                    <paper-button center-center="" class$="{{getCssClass(key, nested)}}" flat="" noink="" testattr$="{{isSelected}}">
                         <span class="drawer-container">
                             <span>{{title}}</span>
                             <iron-icon class="drawer-icon" icon="icons:open-in-browser"></iron-icon>
@@ -12795,7 +12833,7 @@ this.fire('dom-change');
                 </a>                
             </template>
             <template is="dom-if" if="{{!isLink(linkUrl)}}">
-                <paper-button center-center="" class$="{{isFirst(key)}}" flat="" noink="" on-tap="toggle" testattr$="{{isSelected}}">
+                <paper-button center-center="" class$="{{getCssClass(key, nested)}}" flat="" noink="" on-tap="toggle" testattr$="{{isSelected}}">
                     <span class="drawer-container">
                         <span>{{title}}</span>
                         <template is="dom-if" if="{{showDropDown(isSelected, isOpened)}}">
@@ -12807,7 +12845,7 @@ this.fire('dom-change');
                     </span>
                 </paper-button>
                 <iron-collapse noanimation="" id="panel" opened$="{{isSelected}}">
-                    <div class="collapse-content"><content></content></div>
+                    <div class$="{{getBackgroundCss(key, 'collapse-content')}}"><content></content></div>
                 </iron-collapse>
             </template>            
         </div>
@@ -12833,6 +12871,10 @@ this.fire('dom-change');
             linkUrl: {
                 type: String,
                 value: null
+            },
+            nested: {
+                type: Boolean,
+                value: false
             }
         },
 
@@ -12859,6 +12901,45 @@ this.fire('dom-change');
 
         isLink: function (url) {
             return url != null;
+        },
+
+        attached: function () {
+            var el = Polymer.dom(this).parentNode;
+            while (el != null) {
+                if (el.tagName != null && el.tagName.toLowerCase() === 'my-accordion') {
+                    this.set('nested', !!el.nested);
+                    break;
+                }
+                el = el.parentNode;
+            }
+        },
+
+        getCssClass: function (key, nested) {
+            var classes = [];
+            classes.push('drawer-' + key);
+            if (key !== "1") {
+                classes.push('noTopBorder');
+            }
+            if (!!nested) {
+                classes.push('subcontent-page');
+            } else {
+                classes.push('topcontent-page');
+            }
+            return classes.join(' ');
+        },
+
+        getBackgroundCss: function (key, additional) {
+            var classes = [];
+            if (additional != null) {
+                classes.push(additional);
+            }
+            classes.push('drawer-' + key);
+            /*
+            if (key !== "1") {
+                classes.push('noTopBorder');
+            }
+            */
+            return classes.join(' ');
         }
     });
 })();</script>
