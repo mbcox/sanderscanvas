@@ -12697,18 +12697,37 @@ this.fire('dom-change');
         },
 
         heard: function (e, detail, sender) {
-            var pages = this.queryAllEffectiveChildren('my-accordion-page');
-            for (var i = 0; i < pages.length; i++) {
-                var selected = pages[i].key === detail.key;
-                pages[i].set('isSelected', selected); //pages[i].key === detail.key);
-                //console.log('drawer ' + pages[i].key + ' ' + selected);
-                if (selected) {
+            console.log('heard selected event - ' + detail.key);
+            //first, check to see if we just toggled a new page...
+            if (this.selected != detail.key) {
+                this.set('selected', detail.key);
+                var pages = this.queryAllEffectiveChildren('my-accordion-page');
+                var scrollPage = null;
+                var pageIndex = -1;
+                for (var i = 0; i < pages.length; i++) {
                     var selPage = pages[i];
+                    var isToggledPage = selPage.key === detail.key;
+                    if (isToggledPage) {
+                        //remember this page
+                        pageIndex = i;
+                        scrollPage = selPage;
+                    } else {
+                        //close any other pages
+                        console.log('Closing page ' + (i + 1));
+                        //selPage.set('isOpened', false); //pages[i].key === detail.key);
+                        selPage.closeNoFire();
+                    }                    
+                }
+                //now that we've closed all the other pages, we can scroll to the
+                //new page. We must close the other pages first as that may
+                //affect the scroll positioning.
+                if (scrollPage) {
+                    //scroll the toggled page to the top of the screen
                     this.async(function () {
-                        var rect = this.absolutePosition(selPage); // selPage.getBoundingClientRect();
-                        //console.log('Scroll to: ' + rect.top);
-                        window.scrollTo(0, rect.top - 1);
-                    }, 300);
+                    var rect = this.absolutePosition(scrollPage); // selPage.getBoundingClientRect();
+                    console.log('Scrolling page ' + (pageIndex + 1) + ' to top. window.scrollTo(0, ' + +rect.top + ')');
+                    window.scrollTo(0, rect.top - 1);
+                    }, 300);                           
                 }
             }
             e.cancelBubble = true;            
@@ -12719,13 +12738,15 @@ this.fire('dom-change');
         },
 
         closeAll: function () {
+            
             this.async(this.closeAllAsync, 100);
         },
 
-        closeAllAsync: function () {
+        closeAllAsync: function () {        
+            console.log('closeAll called...');
             var pages = this.queryAllEffectiveChildren('my-accordion-page');
             for (var i = 0; i < pages.length; i++) {
-                pages[i].set('isSelected', false);
+                pages[i].set('isOpened', false);
             }
         },
 
@@ -12777,34 +12798,6 @@ this.fire('dom-change');
                     font-weight: normal;
                 };
 
-                --paper-button: {
-                     border-top: 1px solid #070042;
-                     border-left: 1px solid #070042;
-                     border-right: 1px solid #070042;
-                     border-bottom: 1px solid #070042;    
-                     border: 0;                 
-                     border-radius: 0;
-                     /*min-height: 80px;*/
-                     color: #070042;
-                     font-family: FreightSansWeb;
-                     font-weight: bold;
-                     font-size: 14pt;
-                     text-transform: inherit;   
-                     @apply(--layout-vertical); 
-                     @apply(--layout-center-center);
-                     margin: 0;     
-                     /*
-                     padding-left: 50px;
-                     padding-right: 50px;
-                         */
-                     padding: 35px 40px ;
-                     /*
-                         border: 0;
-                         background: linear-gradient(#C2F2FA, #356aa0);
-
-                     */
-                };
-                
                 --iron-icon-fill-color: #FF336C;
             }
 
@@ -12816,12 +12809,13 @@ this.fire('dom-change');
             }
 
             .noTopBorder {
+                border: 1px solid #070042;
                 border-top: 0;
             }
 
             .collapse-content {
             padding: 15px;           
-            min-height: 100px;          
+            /*min-height: 100px;          */
             text-align:center;
             }    
             .drawerLink {
@@ -12832,23 +12826,37 @@ this.fire('dom-change');
                 text-align: left;
             }
 
-            .nested-content {
+            paper-button:not(.nested-content) {
                 --paper-button: {
-                border-top: 1px solid #070042;
-                border-left: 1px solid #070042;
-                border-right: 1px solid #070042;
-                border-bottom: 1px solid #070042;
-                border-radius: 0;
-                font-family: FreightSansWeb;
-                font-weight: bold;
-                font-size: 14pt;
-                text-transform: inherit;   
-                @apply(--layout-vertical); 
-                @apply(--layout-center-center);
-                margin: 0;     
-                padding: 35px 40px ;
+                    border-radius: 0;
+                    color: #070042;
+                    font-family: FreightSansWeb;
+                    font-weight: bold;
+                    font-size: 14pt;
+                    text-transform: inherit;   
+                    @apply(--layout-vertical); 
+                    @apply(--layout-center-center);
+                    margin: 0;     
+                    padding: 35px 16px 35px 40px ;
+                     border: 0;                 
                 };
             }
+
+            paper-button.nested-content {
+                --paper-button: {
+                    border: 1px solid #070042;
+                    border-radius: 0;
+                    color: #070042;
+                    font-family: FreightSansWeb;
+                    font-weight: bold;
+                    font-size: 14pt;
+                    text-transform: inherit;   
+                    @apply(--layout-vertical); 
+                    @apply(--layout-center-center);
+                    margin: 0;     
+                    padding: 35px 16px 35px 40px ;
+                };                
+            }            
 
             .test {
                 /*background: transparent;*/
@@ -12858,7 +12866,7 @@ this.fire('dom-change');
         <div class$="{{getBackgroundCss(key, nested)}}" name="{{key}}">
             <template is="dom-if" if="{{isLink(linkUrl)}}">
                 <a class="drawerLink" href="{{linkUrl}}" target="_blank">
-                    <paper-button class$="{{getBorderCss(key, nested)}}" center-center="" flat="" noink="" testattr$="{{isSelected}}">
+                    <paper-button class$="{{getBorderCss(key, nested)}}" center-center="" flat="" noink="">
                         <span class="drawer-container">
                             <span>{{title}}</span>
                             <iron-icon class="drawer-icon" icon="icons:open-in-browser"></iron-icon>
@@ -12866,21 +12874,22 @@ this.fire('dom-change');
                     </paper-button>
                 </a>                
             </template>
-            <template is="dom-if" if="{{!isLink(linkUrl)}}">
-                <paper-button class$="{{getBorderCss(key, nested)}}" center-center="" flat="" noink="" on-tap="toggle" testattr$="{{isSelected}}">                    
+            <template is="dom-if" if="{{!isLink(linkUrl)}}" strip-whitespace="">
+                <paper-button id="drawer-button" center-center="" flat="" noink="" on-tap="toggle">
                     <span class="drawer-container">
                         <span>{{title}}</span>
-                        <template is="dom-if" if="{{showDropDown(isSelected, isOpened)}}">
+                        <template is="dom-if" if="{{showDropDown('true', isOpened)}}">
                             <iron-icon class="drawer-icon" icon="icons:arrow-drop-down"></iron-icon>
                         </template>
-                        <template is="dom-if" if="{{!showDropDown(isSelected, isOpened)}}">
+                        <template is="dom-if" if="{{!showDropDown('true', isOpened)}}">
                             <iron-icon class="drawer-icon" icon="icons:arrow-drop-up"></iron-icon>
                         </template>
                     </span>
-                </paper-button>
-                <iron-collapse class$="{{getBorderCss(key, nested, 'collapse-content')}}" noanimation="" id="panel" opened$="{{isSelected}}">
-                    <div><content></content></div>
+                </paper-button>                     
+                <iron-collapse class="'collapse-content'" noanimation="" id="panel" opened$="{{isOpened}}">
+                    <div class="collapse-content"><content></content></div>
                 </iron-collapse>
+                <span test-attr$="{{getBorderCss(key, nested, isOpened)}}"></span>
             </template>            
         </div>
     </template>
@@ -12896,11 +12905,13 @@ this.fire('dom-change');
             title: String,
             isSelected: {
                 type: Boolean,
-                value: false
+                value: false//,
+                //observer: '_isSelectedChanged'
             },
             isOpened: {
                 type: Boolean,
-                value: true
+                value: false,
+                observer: '_isOpenedChanged'
             },
             linkUrl: {
                 type: String,
@@ -12914,15 +12925,10 @@ this.fire('dom-change');
 
         toggle: function () {
             var panel = Polymer.dom(this.root).querySelector('iron-collapse');
-            panel.toggle();
-            this.isOpened = panel.opened;
-            this.fire('selected', { key: this.key });
-            var subPanels = this.queryAllEffectiveChildren('my-accordion');
-            if (!this.isOpened) {
-                for (var i = 0; i < subPanels.length; i++) {
-                    subPanels[i].closeAll();
-                }
-            } 
+            //panel.toggle();
+            this.set('isOpened', !panel.opened);
+            //this.fire('selected', { key: this.key });                        
+            //this.closeNested();
         },
 
         showDropDown: function (selected, isOpened) {
@@ -12970,25 +12976,88 @@ this.fire('dom-change');
             return classes.join(' ');
         },
 
-        getBorderCss: function (key, nested, additional) {
-            var classes = [];
-            if (!!nested) {
-                classes.push('nested-content');
+        getBorderCss: function (key, nested, opened) {
+            var panel = Polymer.dom(this.root).querySelector('iron-collapse');
+            var button = Polymer.dom(this.root).querySelector('paper-button');
+
+            if (panel && button) {
+                var isNested = !!nested;
+                var isOpened = !!opened;
+
+                panel.toggleClass('nested-content', isNested);
+                button.toggleClass('nested-content', isNested);
+
+                if (isNested) {
+                    var hideTopBorder = key != 1;
+                    panel.toggleClass('noTopBorder', hideTopBorder);
+                    button.toggleClass('noTopBorder', hideTopBorder);
+                }
             }
-            if (key != 1) {
-                classes.push('noTopBorder');
-            }
-            if (additional != null) {
-                classes.push(additional);
-            }
-            if (!!nested) {
-                console.log('  Subdrawer #' + key + ' - ' + classes.join(' '));
-            } else {
-                console.log('Drawer #' + key + ' - ' + classes.join(' '));
-            }
+
+            //var classes = [];
+            //if (!!nested) {                
+            //    classes.push('nested-content');
+            //    if (key != 1) {
+            //        classes.push('noTopBorder');
+            //    }
+            //}
+            //if (!isOpened) {
+            //    //classes.push('iron-collapse-closed');
+            //}
+            //if (additional != null) {
+            //    classes.push(additional);
+            //}
+            //if (!!nested) {
+            //    console.log('  Subdrawer #' + key + ' - ' + classes.join(' '));
+            //} else {
+            //    console.log('Drawer #' + key + ' - ' + classes.join(' '));
+            //}
             
-            return classes.join(' ');
+
+            //return classes.join(' ');
+        },
+
+        _closing: false,
+
+        _isOpenedChanged: function (newValue, oldValue) {
+            if (oldValue !== undefined) {
+                console.log('isOpened for page ' + this.key + ' changed from ' + oldValue + ' to ' + newValue);
+                //var panel = Polymer.dom(this.root).querySelector('iron-collapse');
+                //panel.toggle();
+                //this.isOpened = panel.opened;
+                this.closeNested();
+                if (!this._closing) {
+                    console.log('firing selected event...');
+                    this.fire('selected', { key: this.key });
+                }
+            }
+
+            //if (!newValue && !!oldValue) {
+            //    this.closeNested();
+            //}
+        },                
+
+        closeNoFire: function () {
+            this._closing = true;
+            this.set('isOpened', false);
+            this._closing = false;
+        },
+
+        closeNested: function () {
+            if (!this.isOpened) {
+                var subPanels = this.queryAllEffectiveChildren('my-accordion');
+                for (var i = 0; i < subPanels.length; i++) {
+                    subPanels[i].closeAll();
+                }
+            }
         }
+        /*
+        _isSelectedChanged: function (newValue, oldValue) {
+            var drawers = this.queryAllEffectiveChildren('my-accordion');
+            for (var i = 0; i < drawers.length; i++) {
+                drawers[i].closeAll();
+            }
+        }*/
     });
 })();</script>
 </dom-module>
