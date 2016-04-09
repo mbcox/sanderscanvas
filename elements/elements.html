@@ -12820,8 +12820,16 @@ this.fire('dom-change');
             .drawerLink {
                 text-decoration: none;
             }      
+
+            .collapse-content ::content ul {
+                text-align: left;
+            }
+
+            .test {
+                background: #57CCFA; /* C2F2FA; */
+            }
         </style>
-        <div name="{{key}}">
+        <div class="test" name="{{key}}">
             <template is="dom-if" if="{{isLink(linkUrl)}}">
                 <a class="drawerLink" href="{{linkUrl}}" target="_blank">
                     <paper-button center-center="" class$="{{getCssClass(key, nested)}}" flat="" noink="" testattr$="{{isSelected}}">
