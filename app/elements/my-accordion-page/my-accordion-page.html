@@ -19,59 +19,75 @@
                     font-weight: normal;
                 };
 
-                --paper-button: {
-                     border-top: 1px solid #070042;
-                     border-left: 1px solid #070042;
-                     border-right: 1px solid #070042;
-                     border-bottom: 1px solid #070042;                     
-                     border-radius: 0;
-                     /*min-height: 80px;*/
-                     color: #070042;
-                     font-family: FreightSansWeb;
-                     font-weight: bold;
-                     font-size: 15pt;
-                     text-transform: inherit;   
-                     @apply(--layout-vertical); 
-                     @apply(--layout-center-center);
-                     margin: 0;     
-                     /*
-                     padding-left: 50px;
-                     padding-right: 50px;
-                         */
-                     padding: 40px;   
-                     /*
-                         border: 0;
-                         background: linear-gradient(#C2F2FA, #356aa0);
-
-                     */
-                };
                 --iron-icon-fill-color: #FF336C;
             }
 
-            iron-collapse {
+            iron-collapse.nested-content {
                 border-top: 0;
                 border-left: 1px solid #070042;
                 border-right: 1px solid #070042;
-                border-bottom: 1px solid #070042;                     
+                border-bottom: 1px solid #070042;                             
             }
 
             .noTopBorder {
+                border: 1px solid #070042;
                 border-top: 0;
             }
 
             .collapse-content {
-            padding: 15px;           
-            min-height: 100px;          
-            text-align:center;
+                padding: 15px;                       
+                text-align:center;
+                overflow-wrap: break-word;
             }    
             .drawerLink {
                 text-decoration: none;
             }      
+
+            .collapse-content ::content ul {
+                text-align: left;
+            }
+
+            paper-button:not(.nested-content) {
+                --paper-button: {
+                    border-radius: 0;
+                    color: #070042;
+                    font-family: FreightSansWeb;
+                    font-weight: bold;
+                    font-size: 14pt;
+                    text-transform: inherit;   
+                    @apply(--layout-vertical); 
+                    @apply(--layout-center-center);
+                    margin: 0;     
+                    padding: 35px 16px 35px 40px ;
+                     border: 0;                 
+                };
+            }
+
+            paper-button.nested-content {
+                --paper-button: {
+                    border: 1px solid #070042;
+                    border-radius: 0;
+                    color: #070042;
+                    font-family: FreightSansWeb;
+                    font-weight: bold;
+                    font-size: 14pt;
+                    text-transform: inherit;   
+                    @apply(--layout-vertical); 
+                    @apply(--layout-center-center);
+                    margin: 0;     
+                    padding: 35px 16px 35px 40px ;
+                };                
+            }            
+
+            .test {
+                /*background: transparent;*/
+                /*background: #57CCFA; */ /* C2F2FA; */
+            }
         </style>
-        <div name="{{key}}">
+        <div class$="{{getBackgroundCss(key, nested)}}" name="{{key}}">
             <template is="dom-if" if="{{isLink(linkUrl)}}">
                 <a class="drawerLink" href="{{linkUrl}}" target="_blank">
-                    <paper-button center-center class$="{{isFirst(key)}}" flat noink testAttr$="{{isSelected}}">
+                    <paper-button class$="{{getBorderCss(key, nested)}}" center-center flat noink>
                         <span class="drawer-container">
                             <span>{{title}}</span>
                             <iron-icon class="drawer-icon" icon="icons:open-in-browser"></iron-icon>
@@ -79,21 +95,22 @@
                     </paper-button>
                 </a>                
             </template>
-            <template is="dom-if" if="{{!isLink(linkUrl)}}">
-                <paper-button center-center class$="{{isFirst(key)}}" flat noink on-tap="toggle" testAttr$="{{isSelected}}">
+            <template is="dom-if" if="{{!isLink(linkUrl)}}" strip-whitespace>
+                <paper-button id="drawer-button" center-center flat noink on-tap="toggle">
                     <span class="drawer-container">
                         <span>{{title}}</span>
-                        <template is="dom-if" if="{{showDropDown(isSelected, isOpened)}}">
+                        <template is="dom-if" if="{{showDropDown('true', isOpened)}}">
                             <iron-icon class="drawer-icon" icon="icons:arrow-drop-down"></iron-icon>
                         </template>
-                        <template is="dom-if" if="{{!showDropDown(isSelected, isOpened)}}">
+                        <template is="dom-if" if="{{!showDropDown('true', isOpened)}}">
                             <iron-icon class="drawer-icon" icon="icons:arrow-drop-up"></iron-icon>
                         </template>
                     </span>
-                </paper-button>
-                <iron-collapse noAnimation id="panel" opened$="{{isSelected}}">
+                </paper-button>                     
+                <iron-collapse class="'collapse-content'" noAnimation id="panel" opened$="{{isOpened}}">
                     <div class="collapse-content"><content></content></div>
                 </iron-collapse>
+                <span test-attr$="{{getBorderCss(key, nested, isOpened)}}"></span>
             </template>            
         </div>
     </template>

@@ -28,21 +28,47 @@
                 }
                 el = el.parentNode;
             }
+
+            //autoset key property on pages
+            var pages = this.queryAllEffectiveChildren('my-accordion-page');
+            for (var i = 0; i < pages.length; i++) {
+                pages[i].set('key', i + 1);
+                pages[i].set('nested', this.nested);
+            }
         },
 
         heard: function (e, detail, sender) {
-            var pages = this.queryAllEffectiveChildren('my-accordion-page');
-            for (var i = 0; i < pages.length; i++) {
-                var selected = pages[i].key === detail.key;
-                pages[i].set('isSelected', selected); //pages[i].key === detail.key);
-                //console.log('drawer ' + pages[i].key + ' ' + selected);
-                if (selected) {
+            console.log('heard selected event - ' + detail.key);
+            //first, check to see if we just toggled a new page...
+            if (this.selected != detail.key) {
+                this.set('selected', detail.key);
+                var pages = this.queryAllEffectiveChildren('my-accordion-page');
+                var scrollPage = null;
+                var pageIndex = -1;
+                for (var i = 0; i < pages.length; i++) {
                     var selPage = pages[i];
+                    var isToggledPage = selPage.key === detail.key;
+                    if (isToggledPage) {
+                        //remember this page
+                        pageIndex = i;
+                        scrollPage = selPage;
+                    } else {
+                        //close any other pages
+                        console.log('Closing page ' + (i + 1));
+                        //selPage.set('isOpened', false); //pages[i].key === detail.key);
+                        selPage.closeNoFire();
+                    }                    
+                }
+                //now that we've closed all the other pages, we can scroll to the
+                //new page. We must close the other pages first as that may
+                //affect the scroll positioning.
+                if (scrollPage) {
+                    //scroll the toggled page to the top of the screen
                     this.async(function () {
-                        var rect = this.absolutePosition(selPage); // selPage.getBoundingClientRect();
-                        //console.log('Scroll to: ' + rect.top);
-                        window.scrollTo(0, rect.top - 1);
-                    }, 300);
+                    var rect = this.absolutePosition(scrollPage); // selPage.getBoundingClientRect();
+                    console.log('Scrolling page ' + (pageIndex + 1) + ' to top. window.scrollTo(0, ' + +rect.top + ')');
+                    window.scrollTo(0, rect.top - 1);
+                    }, 300);                           
                 }
             }
             e.cancelBubble = true;            
@@ -53,13 +79,15 @@
         },
 
         closeAll: function () {
+            
             this.async(this.closeAllAsync, 100);
         },
 
-        closeAllAsync: function () {
+        closeAllAsync: function () {        
+            console.log('closeAll called...');
             var pages = this.queryAllEffectiveChildren('my-accordion-page');
             for (var i = 0; i < pages.length; i++) {
-                pages[i].set('isSelected', false);
+                pages[i].set('isOpened', false);
             }
         },
 
