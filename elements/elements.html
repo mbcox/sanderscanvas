@@ -12602,12 +12602,13 @@ this.fire('dom-change');
       }
 
       .subcontent-page {
-          color: #344B66;
+          /*color: #344B66;*/
       }
 
-    drawer-container {
-        display: inline-block;
+    .drawer-container {     
+        display: inline-block;   
         padding-right: 24px;
+        @apply(--layout-center-center);
     }
     .drawer-icon {
         margin-right: -24px;
@@ -12685,6 +12686,13 @@ this.fire('dom-change');
                     break;
                 }
                 el = el.parentNode;
+            }
+
+            //autoset key property on pages
+            var pages = this.queryAllEffectiveChildren('my-accordion-page');
+            for (var i = 0; i < pages.length; i++) {
+                pages[i].set('key', i + 1);
+                pages[i].set('nested', this.nested);
             }
         },
 
@@ -12800,12 +12808,11 @@ this.fire('dom-change');
                 --iron-icon-fill-color: #FF336C;
             }
 
-            iron-collapse {
+            iron-collapse.nested-content {
                 border-top: 0;
                 border-left: 1px solid #070042;
                 border-right: 1px solid #070042;
-                border-bottom: 1px solid #070042;
-                border: 0;                     
+                border-bottom: 1px solid #070042;                             
             }
 
             .noTopBorder {
@@ -12825,14 +12832,33 @@ this.fire('dom-change');
                 text-align: left;
             }
 
+            .nested-content {
+                --paper-button: {
+                border-top: 1px solid #070042;
+                border-left: 1px solid #070042;
+                border-right: 1px solid #070042;
+                border-bottom: 1px solid #070042;
+                border-radius: 0;
+                font-family: FreightSansWeb;
+                font-weight: bold;
+                font-size: 14pt;
+                text-transform: inherit;   
+                @apply(--layout-vertical); 
+                @apply(--layout-center-center);
+                margin: 0;     
+                padding: 35px 40px ;
+                };
+            }
+
             .test {
-                background: #57CCFA; /* C2F2FA; */
+                /*background: transparent;*/
+                /*background: #57CCFA; */ /* C2F2FA; */
             }
         </style>
-        <div class="test" name="{{key}}">
+        <div class$="{{getBackgroundCss(key, nested)}}" name="{{key}}">
             <template is="dom-if" if="{{isLink(linkUrl)}}">
                 <a class="drawerLink" href="{{linkUrl}}" target="_blank">
-                    <paper-button center-center="" class$="{{getCssClass(key, nested)}}" flat="" noink="" testattr$="{{isSelected}}">
+                    <paper-button class$="{{getBorderCss(key, nested)}}" center-center="" flat="" noink="" testattr$="{{isSelected}}">
                         <span class="drawer-container">
                             <span>{{title}}</span>
                             <iron-icon class="drawer-icon" icon="icons:open-in-browser"></iron-icon>
@@ -12841,7 +12867,7 @@ this.fire('dom-change');
                 </a>                
             </template>
             <template is="dom-if" if="{{!isLink(linkUrl)}}">
-                <paper-button center-center="" class$="{{getCssClass(key, nested)}}" flat="" noink="" on-tap="toggle" testattr$="{{isSelected}}">
+                <paper-button class$="{{getBorderCss(key, nested)}}" center-center="" flat="" noink="" on-tap="toggle" testattr$="{{isSelected}}">                    
                     <span class="drawer-container">
                         <span>{{title}}</span>
                         <template is="dom-if" if="{{showDropDown(isSelected, isOpened)}}">
@@ -12852,8 +12878,8 @@ this.fire('dom-change');
                         </template>
                     </span>
                 </paper-button>
-                <iron-collapse noanimation="" id="panel" opened$="{{isSelected}}">
-                    <div class$="{{getBackgroundCss(key, 'collapse-content')}}"><content></content></div>
+                <iron-collapse class$="{{getBorderCss(key, nested, 'collapse-content')}}" noanimation="" id="panel" opened$="{{isSelected}}">
+                    <div><content></content></div>
                 </iron-collapse>
             </template>            
         </div>
@@ -12911,42 +12937,56 @@ this.fire('dom-change');
             return url != null;
         },
 
-        attached: function () {
-            var el = Polymer.dom(this).parentNode;
-            while (el != null) {
-                if (el.tagName != null && el.tagName.toLowerCase() === 'my-accordion') {
-                    this.set('nested', !!el.nested);
-                    break;
-                }
-                el = el.parentNode;
-            }
-        },
+        //attached: function () {
+        //    var el = Polymer.dom(this).parentNode;
+        //    while (el != null) {
+        //        if (el.tagName != null && el.tagName.toLowerCase() === 'my-accordion') {
+        //            this.set('nested', !!el.nested);
+        //            break;
+        //        }
+        //        el = el.parentNode;
+        //    }
+        //},
 
         getCssClass: function (key, nested) {
-            var classes = [];
-            classes.push('drawer-' + key);
+            var classes = [];            
             if (key !== "1") {
                 classes.push('noTopBorder');
             }
             if (!!nested) {
+                classes.push('drawer-' + key);
                 classes.push('subcontent-page');
             } else {
-                classes.push('topcontent-page');
+                classes.push('topcontent-page');                
             }
             return classes.join(' ');
         },
 
-        getBackgroundCss: function (key, additional) {
+        getBackgroundCss: function (key, nested) {
             var classes = [];
+            if (nested != true) {
+                classes.push('drawer-' + key);
+            }            
+            return classes.join(' ');
+        },
+
+        getBorderCss: function (key, nested, additional) {
+            var classes = [];
+            if (!!nested) {
+                classes.push('nested-content');
+            }
+            if (key != 1) {
+                classes.push('noTopBorder');
+            }
             if (additional != null) {
                 classes.push(additional);
             }
-            classes.push('drawer-' + key);
-            /*
-            if (key !== "1") {
-                classes.push('noTopBorder');
+            if (!!nested) {
+                console.log('  Subdrawer #' + key + ' - ' + classes.join(' '));
+            } else {
+                console.log('Drawer #' + key + ' - ' + classes.join(' '));
             }
-            */
+            
             return classes.join(' ');
         }
     });
