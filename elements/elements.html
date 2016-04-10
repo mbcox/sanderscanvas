@@ -12659,12 +12659,12 @@ this.fire('dom-change');
           /*color: #344B66;*/
       }
 
-    .drawer-container {     
-        display: inline-block;           
+    .drawer-container {             
         @apply(--layout-center-center);
     }
     .drawer-icon {
-        /*margin-right: -24px;*/
+        /*margin-right: -24px;*/  
+        @apply(--layout-center-center);      
     }
 
     .drawer-1 {
@@ -13114,9 +13114,407 @@ this.fire('dom-change');
 <g id="watch"><path d="M20 12c0-2.54-1.19-4.81-3.04-6.27L16 0H8l-.95 5.73C5.19 7.19 4 9.45 4 12s1.19 4.81 3.05 6.27L8 24h8l.96-5.73C18.81 16.81 20 14.54 20 12zM6 12c0-3.31 2.69-6 6-6s6 2.69 6 6-2.69 6-6 6-6-2.69-6-6z"></path></g>
 </defs></svg>
 </iron-iconset-svg>
+
+<dom-module id="iron-flex" assetpath="../bower_components/iron-flex-layout/">
+  <template>
+    <style>
+      .layout.horizontal,
+      .layout.vertical {
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+      }
+
+      .layout.inline {
+        display: -ms-inline-flexbox;
+        display: -webkit-inline-flex;
+        display: inline-flex;
+      }
+
+      .layout.horizontal {
+        -ms-flex-direction: row;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+      }
+
+      .layout.vertical {
+        -ms-flex-direction: column;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+      }
+
+      .layout.wrap {
+        -ms-flex-wrap: wrap;
+        -webkit-flex-wrap: wrap;
+        flex-wrap: wrap;
+      }
+
+      .layout.center,
+      .layout.center-center {
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      }
+
+      .layout.center-justified,
+      .layout.center-center {
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+      }
+
+      .flex {
+        -ms-flex: 1 1 0.000000001px;
+        -webkit-flex: 1;
+        flex: 1;
+        -webkit-flex-basis: 0.000000001px;
+        flex-basis: 0.000000001px;
+      }
+
+      .flex-auto {
+        -ms-flex: 1 1 auto;
+        -webkit-flex: 1 1 auto;
+        flex: 1 1 auto;
+      }
+
+      .flex-none {
+        -ms-flex: none;
+        -webkit-flex: none;
+        flex: none;
+      }
+    </style>
+  </template>
+</dom-module>
+
+
+<dom-module id="iron-flex-reverse" assetpath="../bower_components/iron-flex-layout/">
+  <template>
+    <style>
+      .layout.horizontal-reverse,
+      .layout.vertical-reverse {
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+      }
+
+      .layout.horizontal-reverse {
+        -ms-flex-direction: row-reverse;
+        -webkit-flex-direction: row-reverse;
+        flex-direction: row-reverse;
+      }
+
+      .layout.vertical-reverse {
+        -ms-flex-direction: column-reverse;
+        -webkit-flex-direction: column-reverse;
+        flex-direction: column-reverse;
+      }
+
+      .layout.wrap-reverse {
+        -ms-flex-wrap: wrap-reverse;
+        -webkit-flex-wrap: wrap-reverse;
+        flex-wrap: wrap-reverse;
+      }
+    </style>
+  </template>
+</dom-module>
+
+
+<dom-module id="iron-flex-alignment" assetpath="../bower_components/iron-flex-layout/">
+  <template>
+    <style>
+      /**
+       * Alignment in cross axis.
+       */
+      .layout.start {
+        -ms-flex-align: start;
+        -webkit-align-items: flex-start;
+        align-items: flex-start;
+      }
+
+      .layout.center,
+      .layout.center-center {
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      }
+
+      .layout.end {
+        -ms-flex-align: end;
+        -webkit-align-items: flex-end;
+        align-items: flex-end;
+      }
+
+      .layout.baseline {
+        -ms-flex-align: baseline;
+        -webkit-align-items: baseline;
+        align-items: baseline;
+      }
+
+      /**
+       * Alignment in main axis.
+       */
+      .layout.start-justified {
+        -ms-flex-pack: start;
+        -webkit-justify-content: flex-start;
+        justify-content: flex-start;
+      }
+
+      .layout.center-justified,
+      .layout.center-center {
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+      }
+
+      .layout.end-justified {
+        -ms-flex-pack: end;
+        -webkit-justify-content: flex-end;
+        justify-content: flex-end;
+      }
+
+      .layout.around-justified {
+        -ms-flex-pack: distribute;
+        -webkit-justify-content: space-around;
+        justify-content: space-around;
+      }
+
+      .layout.justified {
+        -ms-flex-pack: justify;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+      }
+
+      /**
+       * Self alignment.
+       */
+      .self-start {
+        -ms-align-self: flex-start;
+        -webkit-align-self: flex-start;
+        align-self: flex-start;
+      }
+
+      .self-center {
+        -ms-align-self: center;
+        -webkit-align-self: center;
+        align-self: center;
+      }
+
+      .self-end {
+        -ms-align-self: flex-end;
+        -webkit-align-self: flex-end;
+        align-self: flex-end;
+      }
+
+      .self-stretch {
+        -ms-align-self: stretch;
+        -webkit-align-self: stretch;
+        align-self: stretch;
+      }
+
+      .self-baseline {
+        -ms-align-self: baseline;
+        -webkit-align-self: baseline;
+        align-self: baseline;
+      };
+
+      /**
+       * multi-line alignment in main axis.
+       */
+      .layout.start-aligned {
+        -ms-flex-line-pack: start;  /* IE10 */
+        -ms-align-content: flex-start;
+        -webkit-align-content: flex-start;
+        align-content: flex-start;
+      }
+
+      .layout.end-aligned {
+        -ms-flex-line-pack: end;  /* IE10 */
+        -ms-align-content: flex-end;
+        -webkit-align-content: flex-end;
+        align-content: flex-end;
+      }
+
+      .layout.center-aligned {
+        -ms-flex-line-pack: center;  /* IE10 */
+        -ms-align-content: center;
+        -webkit-align-content: center;
+        align-content: center;
+      }
+
+      .layout.between-aligned {
+        -ms-flex-line-pack: justify;  /* IE10 */
+        -ms-align-content: space-between;
+        -webkit-align-content: space-between;
+        align-content: space-between;
+      }
+
+      .layout.around-aligned {
+        -ms-flex-line-pack: distribute;  /* IE10 */
+        -ms-align-content: space-around;
+        -webkit-align-content: space-around;
+        align-content: space-around;
+      }
+    </style>
+  </template>
+</dom-module>
+
+<dom-module id="iron-flex-factors" assetpath="../bower_components/iron-flex-layout/">
+  <template>
+    <style>
+      .flex,
+      .flex-1 {
+        -ms-flex: 1 1 0.000000001px;
+        -webkit-flex: 1;
+        flex: 1;
+        -webkit-flex-basis: 0.000000001px;
+        flex-basis: 0.000000001px;
+      }
+
+      .flex-2 {
+        -ms-flex: 2;
+        -webkit-flex: 2;
+        flex: 2;
+      }
+
+      .flex-3 {
+        -ms-flex: 3;
+        -webkit-flex: 3;
+        flex: 3;
+      }
+
+      .flex-4 {
+        -ms-flex: 4;
+        -webkit-flex: 4;
+        flex: 4;
+      }
+
+      .flex-5 {
+        -ms-flex: 5;
+        -webkit-flex: 5;
+        flex: 5;
+      }
+
+      .flex-6 {
+        -ms-flex: 6;
+        -webkit-flex: 6;
+        flex: 6;
+      }
+
+      .flex-7 {
+        -ms-flex: 7;
+        -webkit-flex: 7;
+        flex: 7;
+      }
+
+      .flex-8 {
+        -ms-flex: 8;
+        -webkit-flex: 8;
+        flex: 8;
+      }
+
+      .flex-9 {
+        -ms-flex: 9;
+        -webkit-flex: 9;
+        flex: 9;
+      }
+
+      .flex-10 {
+        -ms-flex: 10;
+        -webkit-flex: 10;
+        flex: 10;
+      }
+
+      .flex-11 {
+        -ms-flex: 11;
+        -webkit-flex: 11;
+        flex: 11;
+      }
+
+      .flex-12 {
+        -ms-flex: 12;
+        -webkit-flex: 12;
+        flex: 12;
+      }
+    </style>
+  </template>
+</dom-module>
+
+
+<dom-module id="iron-positioning" assetpath="../bower_components/iron-flex-layout/">
+  <template>
+    <style>
+      .block {
+        display: block;
+      }
+
+      /* IE 10 support for HTML5 hidden attr */
+      [hidden] {
+        display: none !important;
+      }
+
+      .invisible {
+        visibility: hidden !important;
+      }
+
+      .relative {
+        position: relative;
+      }
+
+      .fit {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      body.fullbleed {
+        margin: 0;
+        height: 100vh;
+      }
+
+      .scroll {
+        -webkit-overflow-scrolling: touch;
+        overflow: auto;
+      }
+
+      /* fixed position */
+      .fixed-bottom,
+      .fixed-left,
+      .fixed-right,
+      .fixed-top {
+        position: fixed;
+      }
+
+      .fixed-top {
+        top: 0;
+        left: 0;
+        right: 0;
+      }
+
+      .fixed-right {
+        top: 0;
+        right: 0;
+        bottom: 0;
+      }
+
+      .fixed-bottom {
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      .fixed-left {
+        top: 0;
+        bottom: 0;
+        left: 0;
+      }
+    </style>
+  </template>
+</dom-module>
 <dom-module id="my-accordion-page" assetpath="my-accordion-page/">
     <template>                
-        <style is="custom-style" include="shared-styles"></style>
+        <style is="custom-style" include="shared-styles iron-flex iron-flex-alignment"></style>
         <style is="custom-style">
             :host {
 
@@ -13148,9 +13546,6 @@ this.fire('dom-change');
                 text-align:center;
                 overflow-wrap: break-word;
             }    
-            .drawerLink {
-                text-decoration: none;
-            }      
 
             .collapse-content ::content ul {
                 text-align: left;
@@ -13169,8 +13564,9 @@ this.fire('dom-change');
                     @apply(--layout-vertical); 
                     @apply(--layout-center-center);
                     margin: 0;     
-                    padding: 35px 40px ;
-                     border: 0;                 
+                    padding: 0;
+                    /*padding: 35px 40px ;*/
+                     border: 0;                           
                 };
             }
 
@@ -13186,9 +13582,22 @@ this.fire('dom-change');
                     @apply(--layout-vertical); 
                     @apply(--layout-center-center);
                     margin: 0;     
-                    padding: 35px 40px ;
+                    /*padding: 35px 40px ;*/                    
+                    padding: 0;
                 };                
             }            
+
+            .drawer-link {
+                text-decoration: none;
+            }      
+            
+            .drawer-icon {
+                padding-left: 16px;
+            }   
+            
+            .drawer-text {
+                padding: 30px 40px 30px 0;
+            }         
 
             .test {
                 /*background: transparent;*/
@@ -13197,31 +13606,38 @@ this.fire('dom-change');
         </style>
         <div class$="{{getBackgroundCss(key, nested)}}" name="{{key}}">
             <template is="dom-if" if="{{isLink(linkUrl)}}">
-                <a class="drawerLink" href="{{linkUrl}}" target="_blank">
-                    <paper-button class$="{{getBorderCss(key, nested)}}" center-center="" flat="" noink="">
-                        <span class="drawer-container">
-                            <iron-icon class="drawer-icon" icon="icons:open-in-browser"></iron-icon>
+                <div class="vertical layout">
+                    <a class="drawer-link" href="{{linkUrl}}" target="_blank">
+                        <paper-button class="layout horizontal center" flat="" noink="">
+                            <div class="drawer-icon">
+                                <iron-icon icon="icons:open-in-browser"></iron-icon>
+                            </div>
+                            <span class="drawer-text flex">{{title}}</span>                            
+                        </paper-button>
+                    </a>
+                    <span test-attr$="{{getBorderCss(key, nested, isOpened)}}"></span>
+                </div>
+            </template>
+            <template is="dom-if" if="{{!isLink(linkUrl)}}" strip-whitespace="">
+                <div class="vertical layout">
+                    <paper-button id="drawer-button" class="layout horizontal center" flat="" noink="" on-tap="toggle">
+                        <div class="drawer-icon">
+                            <template is="dom-if" if="{{showDropDown('true', isOpened)}}">
+                                <iron-icon icon="hardware:keyboard-arrow-right"></iron-icon>
+                            </template>
+                            <template is="dom-if" if="{{!showDropDown('true', isOpened)}}">
+                                <iron-icon icon="hardware:keyboard-arrow-up"></iron-icon>
+                            </template>
+                        </div>
+                        <span class="drawer-text flex" layout="">
                             <span>{{title}}</span>
                         </span>
                     </paper-button>
-                </a>                
-            </template>
-            <template is="dom-if" if="{{!isLink(linkUrl)}}" strip-whitespace="">
-                <paper-button id="drawer-button" center-center="" flat="" noink="" on-tap="toggle">
-                    <span class="drawer-container">
-                        <template is="dom-if" if="{{showDropDown('true', isOpened)}}">
-                            <iron-icon class="drawer-icon" icon="hardware:keyboard-arrow-right"></iron-icon>
-                        </template>
-                        <template is="dom-if" if="{{!showDropDown('true', isOpened)}}">
-                            <iron-icon class="drawer-icon" icon="hardware:keyboard-arrow-up"></iron-icon>
-                        </template>
-                        <span>{{title}}</span>
-                    </span>
-                </paper-button>                     
-                <iron-collapse class="'collapse-content'" noanimation="" id="panel" opened$="{{isOpened}}">
-                    <div class="collapse-content"><content></content></div>
-                </iron-collapse>
-                <span test-attr$="{{getBorderCss(key, nested, isOpened)}}"></span>
+                    <iron-collapse class="'collapse-content'" noanimation="" id="panel" opened$="{{isOpened}}">
+                        <div class="collapse-content"><content></content></div>
+                    </iron-collapse>
+                    <span test-attr$="{{getBorderCss(key, nested, isOpened)}}"></span>
+                </div>
             </template>            
         </div>
     </template>
@@ -13393,4 +13809,97 @@ this.fire('dom-change');
     });
 })();</script>
 </dom-module>
-</div></body></html>
+<dom-module id="my-imagemap" assetpath="my-map/">
+    <template>
+        <area shape="rect" coords="1,1,2,2" href="#" alt="hey">
+        <span>Test</span>
+        <template is="dom-repeat" items="{{areas}}">
+            <area shape="{{shape}}" coords="{{coords}}" href="{{href}}" alt="{{alt}}" target="{{target}}">
+        </template>
+    </template>
+    <script>﻿(function () {
+    'use strict';
+
+    Polymer({
+        is: 'my-map',
+        extends: 'map',
+        properties: {
+            areas: Array,
+            value: [],
+            observer: '_areasChanged'
+        },
+        _areasChanged: function (newValue, oldValue) {
+            var n = Polymer.dom(this.root);
+            while (n.firstChild) {
+                n.removeChild(n.firstChild);
+            }
+            for (var i = 0; i < this.areas.length; i++) {
+                var a = this.areas[i];
+                var area = document.createElement('area');
+                area.setAttribute('shape', a.shape);
+                area.setAttribute('coords', a.coords);
+                area.setAttribute('href', a.href);
+                area.setAttribute('target', a.target);
+                area.setAttribute('alt', a.alt);
+                Polymer.dom(this.root).appendChild(area);
+            }
+        }
+    });
+})();</script>
+</dom-module><dom-module id="my-imagemap" assetpath="my-imagemap/">
+    <template>    
+        <span>{{areas.length}}</span>
+        <img src$="{{imgSrc}}" alt$="{{imgAlt}}" usemap="#map">            
+        <map is="my-map" name="map" areas="{{areas}}"></map>
+    </template>
+    <script>﻿(function () {
+    'use strict';
+
+    Polymer({
+        is: 'my-imagemap',
+
+        properties: {
+            imgSrc: {
+                type: String,
+                value: ""
+            },
+            imgAlt: {
+                type: String,
+                value: ""
+            },
+            areas: {
+                type: Array,
+                value: []
+            },
+            test: {
+                type: String,
+                value: ""
+            }
+        },
+
+        attached: function () {
+            this.async(function () {
+                var msg = this.imgAlt + this.imgSrc;
+
+                var temp = [];
+                var areas = this.queryAllEffectiveChildren('area');
+                for (var i = 0; i < areas.length; i++) {
+                    var a = areas[i];
+                    var b = {
+                        shape: a.getAttribute('shape'),
+                        coords: a.getAttribute('coords'),
+                        href: a.getAttribute('href'),
+                        target: a.getAttribute('target'),
+                        alt: a.getAttribute('alt')
+                    }
+                    temp.push(b);
+                }
+                this.set('areas', temp);
+            });
+        },
+
+        ready: function () {
+        }
+    });
+})();</script>
+</dom-module></div></body></html>
