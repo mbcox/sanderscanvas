@@ -13592,9 +13592,13 @@ this.fire('dom-change');
             }      
             
             .drawer-icon {
-                padding-left: 16px;
+                /*padding-left: 16px;*/
+                margin-right: -24px;
             }   
             
+            .drawer-container {
+                padding: 35px 40px;
+            }
             .drawer-text {
                 padding: 35px 40px 35px 0;
             }         
@@ -13609,10 +13613,11 @@ this.fire('dom-change');
                 <div class="vertical layout">
                     <a class="drawer-link" href="{{linkUrl}}" target="_blank">
                         <paper-button class="layout horizontal center" flat="" noink="">
-                            <div class="drawer-icon">
-                                <iron-icon icon="icons:open-in-browser"></iron-icon>
+                            
+                            <div class="drawer-container">
+                                <span>{{title}}</span>
+                                <iron-icon class="drawer-icon" icon="icons:open-in-browser"></iron-icon>
                             </div>
-                            <span class="drawer-text flex">{{title}}</span>                            
                         </paper-button>
                     </a>
                     <span test-attr$="{{getBorderCss(key, nested, isOpened)}}"></span>
@@ -13621,17 +13626,17 @@ this.fire('dom-change');
             <template is="dom-if" if="{{!isLink(linkUrl)}}" strip-whitespace="">
                 <div class="vertical layout">
                     <paper-button id="drawer-button" class="layout horizontal center" flat="" noink="" on-tap="toggle">
-                        <div class="drawer-icon">
+                        <div class="drawer-container">
+                            <span>{{title}}</span>                            
                             <template is="dom-if" if="{{showDropDown('true', isOpened)}}">
-                                <iron-icon icon="hardware:keyboard-arrow-right"></iron-icon>
+                                
+                                <iron-icon class="drawer-icon" icon="icons:arrow-drop-down"></iron-icon>
                             </template>
                             <template is="dom-if" if="{{!showDropDown('true', isOpened)}}">
-                                <iron-icon icon="hardware:keyboard-arrow-down"></iron-icon>
-                            </template>
+                                
+                                <iron-icon class="drawer-icon" icon="icons:arrow-drop-up"></iron-icon>
+                            </template>                            
                         </div>
-                        <span class="drawer-text flex" layout="">
-                            <span>{{title}}</span>
-                        </span>
                     </paper-button>
                     <iron-collapse class="'collapse-content'" noanimation="" id="panel" opened$="{{isOpened}}">
                         <div class="collapse-content"><content></content></div>
