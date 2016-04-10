@@ -13710,7 +13710,8 @@ this.fire('dom-change');
             .collapse-content.disable-links ::content a {
                 pointer-events: none;
                 cursor: default;
-            }*/
+            }
+                */
 
             paper-button:not(.nested-content) {
                 --paper-button: {
@@ -13801,7 +13802,7 @@ this.fire('dom-change');
                             <iron-icon class="drawer-icon" icon$="{{getDropdownIcon(isOpened)}}"></iron-icon>
                         </div>
                     </paper-button>
-                    <iron-collapse class="collapse-content" no-animation="" id="panel" opened$="{{isOpened}}">
+                    <iron-collapse class="collapse-content disable-links" no-animation="" id="panel" opened$="{{isOpened}}">
                         <content></content>
                     </iron-collapse>
                     
@@ -13863,14 +13864,16 @@ this.fire('dom-change');
         },
 
         toggle: function (e) {
-            //toggle the closed state of the panel by modifying the
-            //isOpened property of this element. The iron-collapse
-            //has its opened attribute data-bound to the isOpened
-            //property of this element.
-            var panel = Polymer.dom(this.root).querySelector('iron-collapse');
-            this.set('isOpened', !panel.opened);
-            e.cancelBubble = true;
-            e.preventDefault();
+            this.async(function () {
+                //toggle the closed state of the panel by modifying the
+                //isOpened property of this element. The iron-collapse
+                //has its opened attribute data-bound to the isOpened
+                //property of this element.
+                var panel = Polymer.dom(this.root).querySelector('iron-collapse');
+                this.set('isOpened', !panel.opened);
+                e.cancelBubble = true;
+                e.preventDefault();
+            }, 50);
         },
 
         isLink: function (url) {
@@ -13929,10 +13932,8 @@ this.fire('dom-change');
                 console.log('firing selected event...');
                 this.fire('selected', { key: this.key });
                 
-                /*
                 var panel = Polymer.dom(this.root).querySelector('iron-collapse');
                 panel.toggleClass('disable-links', !this.isOpened);
-                */
             }
         },
 
