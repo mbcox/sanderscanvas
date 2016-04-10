@@ -1,9 +1,9 @@
 {
-    "name": "Sanders Canvassing",
-    "short_name": "Sanders Canvassing",
+    "name": "Berning Questions",
+    "short_name": "Berning Questions",
     "icons": [
         {
-            "src" "images/touch/apple-touch-icon-57x57.png",
+            "src" "images/touch/favicon.jpg",
             "sizes": "57x57",
             "type": "image/png"
         },
