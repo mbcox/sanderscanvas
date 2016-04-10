@@ -12751,12 +12751,15 @@ this.fire('dom-change');
 
         onPageSelected: function (e, detail, sender) {
             console.log('heard selected event - ' + detail.key);
+
+            var scrollPage = null;
+            var pageIndex = -1;
+            var pages = this.queryAllEffectiveChildren('my-accordion-page');
+
             //first, check to see if we just toggled a new page...
             if (this.selected != detail.key) {
-                this.set('selected', detail.key);
-                var pages = this.queryAllEffectiveChildren('my-accordion-page');
-                var scrollPage = null;
-                var pageIndex = -1;
+                this.set('selected', detail.key);                
+                
                 for (var i = 0; i < pages.length; i++) {
                     var selPage = pages[i];
                     var isToggledPage = selPage.key === detail.key;
@@ -12770,22 +12773,30 @@ this.fire('dom-change');
                         selPage.closeNoFire();
                     }                    
                 }
-
-                //now that we've closed all the other pages, we can scroll to the
-                //new page. We must close the other pages first as that may
-                //affect the scroll positioning.
-                if (scrollPage) {
-                    //scroll the toggled page to the top of the screen
-                    var rect = this.absolutePosition(scrollPage);                    
-                    console.log('Scrolling page ' + (pageIndex + 1) + ' to top. window.scrollTo(0, ' + +rect.top + ')');
-                    var top = rect.top;
-                    if (scrollPage.nested && scrollPage.key !== 1) {
-                        //account for the noTopBorder on nested pages
-                        top--;
-                    }
-                    window.scrollTo(0, top);
+            }
+            else
+            {
+                pageIndex = detail.key - 1;
+                if (pageIndex >= 0 && pageIndex < pages.length) {
+                    scrollPage = pages[pageIndex];
                 }
             }
+
+            //now that we've closed all the other pages, we can scroll to the
+            //new page. We must close the other pages first as that may
+            //affect the scroll positioning.
+            if (scrollPage) {
+                //scroll the toggled page to the top of the screen
+                var rect = this.absolutePosition(scrollPage);
+                console.log('Scrolling page ' + (pageIndex + 1) + ' to top. window.scrollTo(0, ' + +rect.top + ')');
+                var top = rect.top;
+                if (scrollPage.nested && scrollPage.key !== 1) {
+                    //account for the noTopBorder on nested pages
+                    top--;
+                }
+                window.scrollTo(0, top);
+            }
+
             e.cancelBubble = true;            
         },
 
@@ -13731,7 +13742,7 @@ this.fire('dom-change');
                     border-bottom: 1px solid #070042;
                     border: 1px solid #070042;*/
                     border-radius: 0;
-                    color: #070042;
+                    color: #344B66;
                     font-family: FreightSansWeb;
                     font-weight: bold;
                     font-size: 14pt;
@@ -13859,6 +13870,7 @@ this.fire('dom-change');
             var panel = Polymer.dom(this.root).querySelector('iron-collapse');
             this.set('isOpened', !panel.opened);
             e.cancelBubble = true;
+            e.preventDefault();
         },
 
         isLink: function (url) {
