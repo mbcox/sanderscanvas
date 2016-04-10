@@ -12765,20 +12765,25 @@ this.fire('dom-change');
                         pageIndex = i;
                         scrollPage = selPage;
                     } else {
-                        //close any other pages
-                        console.log('Closing page ' + (i + 1));
-                        //selPage.set('isOpened', false); //pages[i].key === detail.key);
+                        //close any other pages, without triggering additional events
+                        console.log('Closing page ' + (i + 1));                        
                         selPage.closeNoFire();
                     }                    
                 }
+
                 //now that we've closed all the other pages, we can scroll to the
                 //new page. We must close the other pages first as that may
                 //affect the scroll positioning.
                 if (scrollPage) {
                     //scroll the toggled page to the top of the screen
-                    var rect = this.absolutePosition(scrollPage); // selPage.getBoundingClientRect();
+                    var rect = this.absolutePosition(scrollPage);                    
                     console.log('Scrolling page ' + (pageIndex + 1) + ' to top. window.scrollTo(0, ' + +rect.top + ')');
-                    window.scrollTo(0, rect.top - 1);
+                    var top = rect.top;
+                    if (scrollPage.nested && scrollPage.key !== 1) {
+                        //account for the noTopBorder on nested pages
+                        top--;
+                    }
+                    window.scrollTo(0, top);
                 }
             }
             e.cancelBubble = true;            
@@ -13664,14 +13669,17 @@ this.fire('dom-change');
             }            
 
             iron-collapse.nested-content {
+                border: 1px solid rgba(7,0,66,0.3);
                 border-top: 0;
+                /*
                 border-left: 1px solid #070042;
                 border-right: 1px solid #070042;
-                border-bottom: 1px solid #070042;                             
+                border-bottom: 1px solid #070042;                             */
             }
 
             .noTopBorder {
                 border: 1px solid #070042;
+                border: 1px solid rgba(7,0,66,0.3);
                 border-top: 0;
             }
 
@@ -13687,10 +13695,11 @@ this.fire('dom-change');
                 color: #070042;
             }
 
+            /*
             .collapse-content.disable-links ::content a {
                 pointer-events: none;
                 cursor: default;
-            }
+            }*/
 
             paper-button:not(.nested-content) {
                 --paper-button: {
@@ -13711,7 +13720,16 @@ this.fire('dom-change');
 
             paper-button.nested-content {
                 --paper-button: {
-                    border: 1px solid #070042;
+                                    /*
+                    border-top: 1px solid rgba(255,255,255,0.3);
+                    border-left: 1px solid rgba(255,255,255,0.3);
+                    border-right: 1px solid rgba(7,0,66,0.3);
+                    border-bottom: 1px solid rgba(7,0,66,0.3);
+                                        */
+                    border: 1px solid rgba(7,0,66,0.3);
+                    /*border-right: 1px solid #070042;
+                    border-bottom: 1px solid #070042;
+                    border: 1px solid #070042;*/
                     border-radius: 0;
                     color: #070042;
                     font-family: FreightSansWeb;
@@ -13772,7 +13790,7 @@ this.fire('dom-change');
                             <iron-icon class="drawer-icon" icon$="{{getDropdownIcon(isOpened)}}"></iron-icon>
                         </div>
                     </paper-button>
-                    <iron-collapse class="collapse-content disable-links" no-animation="" id="panel" opened$="{{isOpened}}">
+                    <iron-collapse class="collapse-content" no-animation="" id="panel" opened$="{{isOpened}}">
                         <content></content>
                     </iron-collapse>
                     
@@ -13833,13 +13851,14 @@ this.fire('dom-change');
             }*/
         },
 
-        toggle: function () {
+        toggle: function (e) {
             //toggle the closed state of the panel by modifying the
             //isOpened property of this element. The iron-collapse
             //has its opened attribute data-bound to the isOpened
             //property of this element.
             var panel = Polymer.dom(this.root).querySelector('iron-collapse');
             this.set('isOpened', !panel.opened);
+            e.cancelBubble = true;
         },
 
         isLink: function (url) {
@@ -13898,8 +13917,10 @@ this.fire('dom-change');
                 console.log('firing selected event...');
                 this.fire('selected', { key: this.key });
                 
+                /*
                 var panel = Polymer.dom(this.root).querySelector('iron-collapse');
                 panel.toggleClass('disable-links', !this.isOpened);
+                */
             }
         },
 
