@@ -9,14 +9,14 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<html lang="en">
+<html lang="en" manifest="cache.manifest">
 
 <head>
   <meta charset="utf-8">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="generator" content="Polymer Starter Kit">
-  <title>Sanders Canvassing</title>
+  <title>Berning Questions</title>
     <link rel="shortcut icon" href="images/icon.svg" type="image/svg" />
     <base target="_blank" >
 
@@ -33,14 +33,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <!-- Add to homescreen for Chrome on Android -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="PSK">
-  <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+  <meta name="application-name" content="Berning Questions">
+  <link rel="icon" sizes="192x192" href="images/touch/android-192x192.jpg" /> 
 
   <!-- Add to homescreen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Sanders Canvassing">
-  <link rel="apple-touch-icon" href="images/touch/apple-touch-icon-57x57.png">
+  <meta name="apple-mobile-web-app-title" content="Berning Questions">
+  <link rel="apple-touch-icon" sizes="57x57" href="images/touch/iphone-nonretina-57x57.jpg" />
+  <link rel="apple-touch-icon" sizes="72x72" href="images/touch/ipad-nonretina-72x72.jpg" />
+  <link rel="apple-touch-icon" sizes="114x114" href="images/touch/iphone-icon-114x114.jpg" />
+  <link rel="apple-touch-icon" sizes="144x144" href="images/touch/ipad-icon-144x144.jpg" />
 
   <!-- Tile icon for Win8 (144x144) -->
   <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
@@ -108,6 +111,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               padding-bottom: 2px;
           }
       </style>      
+
+      <!--
+      <my-imagemap id="testMap" imgSrc="images/d3main.svg" imgAlt="Alt">
+        <area shape="rect" coords="1,1,10,10" href="http://www.google.com" target="_blank" alt="xyz" />
+      </my-imagemap>      
+          -->
       <my-accordion class="topcontent">
           <my-accordion-page title="Is Bernie even electable?">
               <img src="images/d1main.svg" alt="Electability" />
@@ -117,15 +126,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   </my-accordion-page>
                   <my-accordion-page title="Sources and Additional Reading">
                       <ul>
-                          <li><a href="https://www.qu.edu/images/polling/us/us02182016_Urpfd42.pdf">Quinnipiac University Poll: American Voters Feel the Bern:</a></li>
-                          <li><a href="http://fivethirtyeight.com/features/donald-trump-is-really-unpopular-with-general-election-voters/">FiveThirtyEight Favorability Ratings:</a></li>
-                          <li><a href="http://robertreich.org/post/138036377515">General Election Matchups:</a></li>
-                          <li><a href="http://elections.huffingtonpost.com/pollster/2016-national-democratic-primary">HuffPost’s 2016 National Democratic Primary Poll tracker:</a></li>
-                          <li><a href="http://time.com/4279143/bernie-sanders-breaks-fundraising-record/">Time: Bernie Sanders Breaks Fundraising Record:</a></li>
-                          <li><a href="http://www.theatlantic.com/politics/archive/2016/03/bernie-sanders-fundraising/471648/">The Atlantic: Bernie Sanders’s Big Money:</a></li>
-                          <li><a href="http://www.nytimes.com/interactive/2016/us/elections/election-2016-campaign-money-race.html">NYT: Campaign funding:</a></li>
-                          <li><a href="http://observer.com/2015/12/shock-poll-bernie-sanders-is-the-most-electable-candidate-in-either-party/">Bernie Sanders is the Most Electable Candidate in Either Party:</a></li>
-                          <li><a href="http://www.huffingtonpost.com/benjamin-studebaker/why-bernie-sanders-is-more-electable_b_9219882.html">Why Bernie Sanders is more Electable:</a></li>                          
+                          <li><a href="https://www.qu.edu/images/polling/us/us02182016_Urpfd42.pdf">Quinnipiac University Poll: American Voters Feel the Bern</a></li>
+                          <li><a href="http://fivethirtyeight.com/features/donald-trump-is-really-unpopular-with-general-election-voters/">FiveThirtyEight Favorability Ratings</a></li>
+                          <li><a href="http://robertreich.org/post/138036377515">General Election Matchups</a></li>
+                          <li><a href="http://elections.huffingtonpost.com/pollster/2016-national-democratic-primary">HuffPost’s 2016 National Democratic Primary Poll tracker</a></li>
+                          <li><a href="http://time.com/4279143/bernie-sanders-breaks-fundraising-record/">Time: Bernie Sanders Breaks Fundraising Record</a></li>
+                          <li><a href="http://www.theatlantic.com/politics/archive/2016/03/bernie-sanders-fundraising/471648/">The Atlantic: Bernie Sanders’s Big Money</a></li>
+                          <li><a href="http://www.nytimes.com/interactive/2016/us/elections/election-2016-campaign-money-race.html">NYT: Campaign funding</a></li>
+                          <li><a href="http://observer.com/2015/12/shock-poll-bernie-sanders-is-the-most-electable-candidate-in-either-party/">Bernie Sanders is the Most Electable Candidate in Either Party</a></li>
+                          <li><a href="http://www.huffingtonpost.com/benjamin-studebaker/why-bernie-sanders-is-more-electable_b_9219882.html">Why Bernie Sanders is more Electable</a></li>                          
                           <li><a href="http://www.salon.com/2016/02/19/hillary_clinton_just_cant_win_democrats_need_to_accept_that_only_bernie_sanders_can_defeat_the_gop/">Only Bernie Sanders can defeat the GOP</a></li>
                       </ul>
                   </my-accordion-page>
@@ -142,12 +151,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   </my-accordion-page>
                   <my-accordion-page title="Sources and Additional Reading">
                       <ul>
-                          <li><a href="https://docs.google.com/spreadsheets/d/1MZGzbSWESE8t18GGzrgc2FfL0b5tz-vmNf-F_-w5yN4/edit?usp=sharing">The complete list of Sanders Democrats: </a></li>
-                          <li><a href="https://www.facebook.com/SandersDemocrats/">Sanders Democrats Facebook Group:</a></li>
-                          <li><a href="http://www.rollingstone.com/politics/news/inside-the-horror-show-that-is-congress-20050825">2005 Rolling Stone profile:</a></li>
-                          <li><a href="http://www.alternet.org/election-2016/bernie-gets-it-done-sanders-record-pushing-through-major-reforms-will-surprise-you">Alternet: Bernie Gets it Done: </a></li>
-                          <li><a href="http://www.nytimes.com/2016/03/15/us/politics/bernie-sanders-amendments.html">NYT: Via Legislative Side Doors, Bernie Sanders Won Modest Victories: </a></li>
-                          <li><a href="http://www.msnbc.com/msnbc/bernie-sanders-remakes-budget-committee-his-image">MSNBC: Bernie Sanders remakes Budget Committee in his image: </a></li>
+                          <li><a href="https://docs.google.com/spreadsheets/d/1MZGzbSWESE8t18GGzrgc2FfL0b5tz-vmNf-F_-w5yN4/edit?usp=sharing">The complete list of Sanders Democrats</a></li>
+                          <li><a href="https://www.facebook.com/SandersDemocrats/">Sanders Democrats Facebook Group</a></li>
+                          <li><a href="http://www.rollingstone.com/politics/news/inside-the-horror-show-that-is-congress-20050825">2005 Rolling Stone profile</a></li>
+                          <li><a href="http://www.alternet.org/election-2016/bernie-gets-it-done-sanders-record-pushing-through-major-reforms-will-surprise-you">Alternet: Bernie Gets it Done</a></li>
+                          <li><a href="http://www.nytimes.com/2016/03/15/us/politics/bernie-sanders-amendments.html">NYT: Via Legislative Side Doors, Bernie Sanders Won Modest Victories</a></li>
+                          <li><a href="http://www.msnbc.com/msnbc/bernie-sanders-remakes-budget-committee-his-image">MSNBC: Bernie Sanders remakes Budget Committee in his image</a></li>
                           <li><a href="http://www.sanders.senate.gov/legislative-landmarks">Legislative Landmarks</a></li>
                       </ul>
                   </my-accordion-page>
@@ -182,7 +191,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <my-accordion-page title="Sources and Additional Reading">
                       <ul>
                           <li><a href="http://www.berniesanders.com">Policy info from berniesanders.com</a></li>
-                          <li><a href="http://www.commonwealthfund.org/publications/press-releases/2015/oct/us-spends-more-on-health-care-than-other-nations">The Common Wealth Fund: US Spends more on Health Care than other High-Income Nations But has Lower Life Expectancy, Worse Health: </a></li>
+                          <li><a href="http://www.commonwealthfund.org/publications/press-releases/2015/oct/us-spends-more-on-health-care-than-other-nations">The Common Wealth Fund: US Spends more on Health Care than other High-Income Nations But has Lower Life Expectancy, Worse Health</a></li>
                           <li><a href="http://www.bbc.com/news/business-28212223">http://www.bbc.com/news/business-28212223</a></li>
                           <li><a href="http://www.alternet.org/economy/robert-reich-would-you-rather-2-or-3-big-health-">http://www.alternet.org/economy/robert-reich-would-you-rather-2-or-3-big-health-</a></li>
                           <li><a href="http://www.ibtimes.com/obamacare-effect-top-us-insurers-reward-shareholders-healthcare-costs-climb-2032391">insurance-companies-or-govt-run-single-payer</a></li>
@@ -209,7 +218,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                       <my-accordion-page title="Sources and Additional Reading">
                           <ul>
                               <li><a href="http://www.citizen.org/Page.aspx?pid=5359">Breaking Up Banks FAQs:</a></li>
-                              <li><a href="https://berniesanders.com/statement-by-senator-bernie-sanders-on-wall-street-and-the-economy/">Bernie’s plan:</a></li>
+                              <li><a href="https://berniesanders.com/statement-by-senator-bernie-sanders-on-wall-street-and-the-economy/">Bernie’s plan</a></li>
                               <li><a href="http://rooseveltinstitute.org/sanders-ending-tbtf/">http://rooseveltinstitute.org/sanders-ending-tbtf/</a></li>
                           </ul>
                       </my-accordion-page>
@@ -229,12 +238,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                       <ul>
                           <li><a href="http://www.berniesanders.com">Berniesanders.com</a></li>
                           <li><a href="http://www.feelthebern.org">feelthebern.org</a></li>
-                          <li><a href="http://www.epi.org/publication/safety-net-savings-from-raising-minimum-wage/">Graphs on the minimum wage:</a></li>
-                          <li><a href="http://nlihc.org/sites/default/files/oor/OOR2015_Factsheet.pdf">2015 National Low Income Housing Coalition Factsheet:</a></li>
-                          <li><a href="http://www.thenation.com/article/bernie-sanders-will-make-the-economy-great-again/">The Nation: Bernie Sanders Will Make the Economy Great Again:</a></li>
-                          <li><a href="http://www.seattle.gov/laborstandards/minimum-wage">Seattle’s $15/hr minimum wage:</a></li>
-                          <li><a href="http://cepr.net/blogs/cepr-blog/2014-job-creation-in-states-that-raised-the-minimum-wage">Center for Economic and Policy Research’s 2014 study on the benefits of raising the minimum wage:</a></li>
-                          <li><a href="http://www.theatlantic.com/politics/archive/2016/03/a-major-leap-for-the-minimum-wage/475920/">The Atlantic: A Major Leap for the Minimum Wage: </a></li>
+                          <li><a href="http://www.epi.org/publication/safety-net-savings-from-raising-minimum-wage/">Graphs on the minimum wage</a></li>
+                          <li><a href="http://nlihc.org/sites/default/files/oor/OOR2015_Factsheet.pdf">2015 National Low Income Housing Coalition Factsheet</a></li>
+                          <li><a href="http://www.thenation.com/article/bernie-sanders-will-make-the-economy-great-again/">The Nation: Bernie Sanders Will Make the Economy Great Again</a></li>
+                          <li><a href="http://www.seattle.gov/laborstandards/minimum-wage">Seattle’s $15/hr minimum wage</a></li>
+                          <li><a href="http://cepr.net/blogs/cepr-blog/2014-job-creation-in-states-that-raised-the-minimum-wage">Center for Economic and Policy Research’s 2014 study on the benefits of raising the minimum wage</a></li>
+                          <li><a href="http://www.theatlantic.com/politics/archive/2016/03/a-major-leap-for-the-minimum-wage/475920/">The Atlantic: A Major Leap for the Minimum Wage</a></li>
                       </ul>
                   </my-accordion-page>
               </my-accordion>
@@ -244,9 +253,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <my-accordion>
                   <my-accordion-page title="Sources and Additional Reading">
                       <ul>                           
-                          <li><a href="http://www.politifact.com/punditfact/article/2015/sep/02/11-examples-hillary-clinton-and-bernie-sanders-hol/">Voting Record Chart:</a></li>
-                          <li><a href="http://www.politifact.com/truth-o-meter/statements/2015/jul/07/facebook-posts/meme-says-hillary-clintons-top-donors-are-banks-an/">Funding Chart:</a></li>
-                          <li><a href="http://politicalcompass.org/uselection2016">Political Compass Chart:</a></li>
+                          <li><a href="http://www.politifact.com/punditfact/article/2015/sep/02/11-examples-hillary-clinton-and-bernie-sanders-hol/">Voting Record Chart</a></li>
+                          <li><a href="http://www.politifact.com/truth-o-meter/statements/2015/jul/07/facebook-posts/meme-says-hillary-clintons-top-donors-are-banks-an/">Funding Chart</a></li>
+                          <li><a href="http://politicalcompass.org/uselection2016">Political Compass Chart</a></li>
                       </ul>
                   </my-accordion-page>
               </my-accordion>
@@ -259,17 +268,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <my-accordion>
                   <my-accordion-page title="Sources and Additional Reading">
                       <ul>
-                          <li><a href="http://www.nytimes.com/live/new-hampshire-primary-2016-election/a-prominent-bernie-sanders-critic-ta-nehisi-coates-is-now-a-fan/">Ta Nehisi Coates:</a></li>
-                          <li><a href="http://vetsforbernie.org/what-vets-say-about-bernie/">Veterans:</a></li>
-                          <li><a href="http://vetsforbernie.org/honors/">Veterans:</a></li>
-                          <li><a href="http://www.politicususa.com/2016/01/14/170-economists-bernie-sanders-plan-reform-wall-st-rein-greed.html">170 top economists:</a></li>
-                          <li><a href="http://www.politico.com/story/2016/02/bernie-sanders-robert-reich-endorsement-219892">Robert Reich:</a></li>
-                          <li><a href="http://www.democracynow.org/2015/11/12/stiglitz_sanders_is_right_everybody_has">Joseph Stiglitz:</a></li>
-                          <li><a href="http://www.theguardian.com/us-news/commentisfree/2016/feb/16/thomas-piketty-bernie-sanders-us-election-2016">Thomas Piketty:</a></li>
-                          <li><a href="https://www.facebook.com/drcornelwest/posts/10155953989390111">Dr. Cornel West:</a></li>
-                          <li><a href="http://www.thenation.com/article/bernie-sanders-just-won-two-of-his-biggest-endorsements-in-a-long-campaign/">Tulsi Gabbard:</a></li>
-                          <li><a href="https://berniesanders.com/artists/">Artists for Bernie:</a></li>
-                          <li><a href="http://feelthebern.org/endorsements-for-bernie-sanders/">Individuals/Organizations:</a></li>
+                          <li><a href="http://www.nytimes.com/live/new-hampshire-primary-2016-election/a-prominent-bernie-sanders-critic-ta-nehisi-coates-is-now-a-fan/">Ta Nehisi Coates</a></li>
+                          <li><a href="http://vetsforbernie.org/what-vets-say-about-bernie/">Veterans</a></li>
+                          <li><a href="http://vetsforbernie.org/honors/">Veterans</a></li>
+                          <li><a href="http://www.politicususa.com/2016/01/14/170-economists-bernie-sanders-plan-reform-wall-st-rein-greed.html">170 top economists</a></li>
+                          <li><a href="http://www.politico.com/story/2016/02/bernie-sanders-robert-reich-endorsement-219892">Robert Reich</a></li>
+                          <li><a href="http://www.democracynow.org/2015/11/12/stiglitz_sanders_is_right_everybody_has">Joseph Stiglitz</a></li>
+                          <li><a href="http://www.theguardian.com/us-news/commentisfree/2016/feb/16/thomas-piketty-bernie-sanders-us-election-2016">Thomas Piketty</a></li>
+                          <li><a href="https://www.facebook.com/drcornelwest/posts/10155953989390111">Dr. Cornel West</a></li>
+                          <li><a href="http://www.thenation.com/article/bernie-sanders-just-won-two-of-his-biggest-endorsements-in-a-long-campaign/">Tulsi Gabbard</a></li>
+                          <li><a href="https://berniesanders.com/artists/">Artists for Bernie</a></li>
+                          <li><a href="http://feelthebern.org/endorsements-for-bernie-sanders/">Individuals/Organizations</a></li>
                       </ul>
                   </my-accordion-page>
               </my-accordion>

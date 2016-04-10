@@ -1,0 +1,11 @@
+﻿<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../styles/shared-styles.html" />
+
+<dom-module id="my-imagemap">
+    <template>    
+        <span>{{areas.length}}</span>
+        <img src$="{{imgSrc}}" alt$="{{imgAlt}}" usemap="#map"/>            
+        <map is="my-map" name="map" areas="{{areas}}"></map>
+    </template>
+    <script src="my-imagemap.js"></script>
+</dom-module>

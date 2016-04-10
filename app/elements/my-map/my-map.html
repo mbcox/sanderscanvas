@@ -1,0 +1,12 @@
+﻿<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="my-imagemap">
+    <template>
+        <area shape="rect" coords="1,1,2,2" href="#" alt="hey" />
+        <span>Test</span>
+        <template is="dom-repeat" items="{{areas}}">
+            <area shape="{{shape}}" coords="{{coords}}" href="{{href}}" alt="{{alt}}" target="{{target}}" />
+        </template>
+    </template>
+    <script src="my-map.js"></script>
+</dom-module>

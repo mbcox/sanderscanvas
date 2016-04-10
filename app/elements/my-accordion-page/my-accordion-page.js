@@ -4,6 +4,10 @@
     Polymer({
         is: 'my-accordion-page',
 
+        behaviors: [
+            Polymer.NeonAnimationRunnerBehavior
+        ],
+
         properties: {
             key: String,
             title: String,
@@ -25,59 +29,46 @@
                 type: Boolean,
                 value: false
             }
+            /*,
+            animationConfig: {
+                value: function () {
+                    return {
+                        'opening': {
+                            name: '',
+                            node: this
+                        },
+                        'closing': {
+                            name: '',
+                            node: this
+                        }
+                    }
+                }
+            },
+            listeners: {
+                'neon-animation-finish': '_onNeonAnimationFinish'
+            }*/
         },
 
         toggle: function () {
+            //toggle the closed state of the panel by modifying the
+            //isOpened property of this element. The iron-collapse
+            //has its opened attribute data-bound to the isOpened
+            //property of this element.
             var panel = Polymer.dom(this.root).querySelector('iron-collapse');
-            //panel.toggle();
             this.set('isOpened', !panel.opened);
-            //this.fire('selected', { key: this.key });                        
-            //this.closeNested();
-        },
-
-        showDropDown: function (selected, isOpened) {
-            return !selected || !isOpened;
-        },
-
-        isFirst: function (key) {
-            return key !== "1" ? "noTopBorder" : "";
         },
 
         isLink: function (url) {
             return url != null;
         },
 
-        //attached: function () {
-        //    var el = Polymer.dom(this).parentNode;
-        //    while (el != null) {
-        //        if (el.tagName != null && el.tagName.toLowerCase() === 'my-accordion') {
-        //            this.set('nested', !!el.nested);
-        //            break;
-        //        }
-        //        el = el.parentNode;
-        //    }
-        //},
-
-        getCssClass: function (key, nested) {
-            var classes = [];            
-            if (key !== "1") {
-                classes.push('noTopBorder');
-            }
-            if (!!nested) {
-                classes.push('drawer-' + key);
-                classes.push('subcontent-page');
-            } else {
-                classes.push('topcontent-page');                
-            }
-            return classes.join(' ');
+        getBackgroundCss: function (key, nested) {
+            return nested != true ? ('drawer-' + key) : '';
         },
 
-        getBackgroundCss: function (key, nested) {
-            var classes = [];
-            if (nested != true) {
-                classes.push('drawer-' + key);
-            }            
-            return classes.join(' ');
+        getDropdownIcon: function (opened) {
+            return !!opened ? 'icons:arrow-drop-up' : 'icons:arrow-drop-down';
+            //return !!opened ? 'hardware:keyboard-arrow-down' : 'hardware:keyboard-arrow-right';
         },
 
         getBorderCss: function (key, nested, opened) {
@@ -97,49 +88,36 @@
                     button.toggleClass('noTopBorder', hideTopBorder);
                 }
             }
-
-            //var classes = [];
-            //if (!!nested) {                
-            //    classes.push('nested-content');
-            //    if (key != 1) {
-            //        classes.push('noTopBorder');
-            //    }
-            //}
-            //if (!isOpened) {
-            //    //classes.push('iron-collapse-closed');
-            //}
-            //if (additional != null) {
-            //    classes.push(additional);
-            //}
-            //if (!!nested) {
-            //    console.log('  Subdrawer #' + key + ' - ' + classes.join(' '));
-            //} else {
-            //    console.log('Drawer #' + key + ' - ' + classes.join(' '));
-            //}
-            
-
-            //return classes.join(' ');
         },
 
         _closing: false,
 
         _isOpenedChanged: function (newValue, oldValue) {
+            //don't need to execute this when the property is initialized.
             if (oldValue !== undefined) {
                 console.log('isOpened for page ' + this.key + ' changed from ' + oldValue + ' to ' + newValue);
-                //var panel = Polymer.dom(this.root).querySelector('iron-collapse');
-                //panel.toggle();
-                //this.isOpened = panel.opened;
-                this.closeNested();
-                if (!this._closing) {
-                    console.log('firing selected event...');
-                    this.fire('selected', { key: this.key });
-                }
+                //if (this._closing) {
+                    this.processChanged();
+                //} else {
+                    //this.async(this.processChanged, 2000);
+                //}                
             }
+        },
 
-            //if (!newValue && !!oldValue) {
-            //    this.closeNested();
-            //}
-        },                
+        processChanged: function () {            
+            this.closeNested();
+            if (!this._closing) {
+                //this.playAnimation(newValue ? 'opening' : 'closing');
+
+                //firing the selected event will allow the parent
+                //accordion close any other pages.
+                console.log('firing selected event...');
+                this.fire('selected', { key: this.key });
+                
+                var panel = Polymer.dom(this.root).querySelector('iron-collapse');
+                panel.toggleClass('disable-links', !this.isOpened);
+            }
+        },
 
         closeNoFire: function () {
             this._closing = true;
@@ -154,13 +132,6 @@
                     subPanels[i].closeAll();
                 }
             }
-        }
-        /*
-        _isSelectedChanged: function (newValue, oldValue) {
-            var drawers = this.queryAllEffectiveChildren('my-accordion');
-            for (var i = 0; i < drawers.length; i++) {
-                drawers[i].closeAll();
-            }
-        }*/
+        }        
     });
 })();

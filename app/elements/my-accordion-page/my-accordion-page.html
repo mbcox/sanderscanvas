@@ -2,12 +2,16 @@
 <link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-badge/paper-badge.html">
+<link rel="import" href="../../bower_components/iron-icons/hardware-icons.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/transform-animation.html">
 <link rel="import" href="../../styles/shared-styles.html">
 
 
 <dom-module id="my-accordion-page">
     <template>                
-        <style is="custom-style" include="shared-styles"></style>
+        <style is="custom-style" include="shared-styles iron-flex iron-flex-alignment"></style>
         <style is="custom-style">
             :host {
 
@@ -20,7 +24,7 @@
                 };
 
                 --iron-icon-fill-color: #FF336C;
-            }
+            }            
 
             iron-collapse.nested-content {
                 border-top: 0;
@@ -39,12 +43,16 @@
                 text-align:center;
                 overflow-wrap: break-word;
             }    
-            .drawerLink {
-                text-decoration: none;
-            }      
 
             .collapse-content ::content ul {
                 text-align: left;
+                font-size: 15pt;
+                color: #070042;
+            }
+
+            .collapse-content.disable-links ::content a {
+                pointer-events: none;
+                cursor: default;
             }
 
             paper-button:not(.nested-content) {
@@ -58,8 +66,9 @@
                     @apply(--layout-vertical); 
                     @apply(--layout-center-center);
                     margin: 0;     
-                    padding: 35px 16px 35px 40px ;
-                     border: 0;                 
+                    padding: 0;
+                    /*padding: 35px 40px ;*/
+                     border: 0;                           
                 };
             }
 
@@ -75,9 +84,26 @@
                     @apply(--layout-vertical); 
                     @apply(--layout-center-center);
                     margin: 0;     
-                    padding: 35px 16px 35px 40px ;
+                    /*padding: 35px 40px ;*/                    
+                    padding: 0;
                 };                
             }            
+
+            .drawer-link {
+                text-decoration: none;
+            }      
+            
+            .drawer-icon {
+                /*padding-left: 16px;*/
+                margin-right: -24px;
+            }   
+            
+            .drawer-container {
+                padding: 35px 40px;
+            }
+            .drawer-text {
+                padding: 35px 40px 35px 0;
+            }         
 
             .test {
                 /*background: transparent;*/
@@ -86,31 +112,43 @@
         </style>
         <div class$="{{getBackgroundCss(key, nested)}}" name="{{key}}">
             <template is="dom-if" if="{{isLink(linkUrl)}}">
-                <a class="drawerLink" href="{{linkUrl}}" target="_blank">
-                    <paper-button class$="{{getBorderCss(key, nested)}}" center-center flat noink>
-                        <span class="drawer-container">
-                            <span>{{title}}</span>
-                            <iron-icon class="drawer-icon" icon="icons:open-in-browser"></iron-icon>
-                        </span>
-                    </paper-button>
-                </a>                
+                <div class="vertical layout">
+                    <a class="drawer-link" href="{{linkUrl}}" target="_blank">
+                        <paper-button class="layout horizontal center" flat noink>
+                            <!--
+                            <div class="drawer-icon">
+                                <iron-icon icon="icons:open-in-browser"></iron-icon>
+                            </div>
+                            <span class="drawer-text flex">{{title}}</span>                            
+                            -->
+                            <div class="drawer-container">
+                                <span>{{title}}</span>
+                                <iron-icon class="drawer-icon" icon="icons:open-in-browser"></iron-icon>
+                            </div>
+                        </paper-button>
+                    </a>
+                    <!--data binding on this span element is used simply to trip
+                        processing of css classes on the paper-button element-->
+
+                    <span test-attr$="{{getBorderCss(key, nested, isOpened)}}"></span>
+                </div>
             </template>
             <template is="dom-if" if="{{!isLink(linkUrl)}}" strip-whitespace>
-                <paper-button id="drawer-button" center-center flat noink on-tap="toggle">
-                    <span class="drawer-container">
-                        <span>{{title}}</span>
-                        <template is="dom-if" if="{{showDropDown('true', isOpened)}}">
-                            <iron-icon class="drawer-icon" icon="icons:arrow-drop-down"></iron-icon>
-                        </template>
-                        <template is="dom-if" if="{{!showDropDown('true', isOpened)}}">
-                            <iron-icon class="drawer-icon" icon="icons:arrow-drop-up"></iron-icon>
-                        </template>
-                    </span>
-                </paper-button>                     
-                <iron-collapse class="'collapse-content'" noAnimation id="panel" opened$="{{isOpened}}">
-                    <div class="collapse-content"><content></content></div>
-                </iron-collapse>
-                <span test-attr$="{{getBorderCss(key, nested, isOpened)}}"></span>
+                <div class="vertical layout">
+                    <paper-button id="drawer-button" class="layout horizontal center" flat noink on-tap="toggle">
+                        <div class="drawer-container">
+                            <span>{{title}}</span>    
+                            <iron-icon class="drawer-icon" icon$="{{getDropdownIcon(isOpened)}}"></iron-icon>
+                        </div>
+                    </paper-button>
+                    <iron-collapse class="collapse-content disable-links" no-animation id="panel" opened$="{{isOpened}}">
+                        <content></content>
+                    </iron-collapse>
+                    <!--data binding on this span element is used simply to trip
+                        processing of css classes on the paper-button and 
+                        iron-collapse elements-->
+                    <span test-attr$="{{getBorderCss(key, nested, isOpened)}}"></span>
+                </div>
             </template>            
         </div>
     </template>

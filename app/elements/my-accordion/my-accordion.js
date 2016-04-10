@@ -17,7 +17,7 @@
         },
 
         attached: function () {
-            //this.heard({}, { key: this.selected }, null);
+            //autoset nested property
             var el = Polymer.dom(this).parentNode;
             while (el != null)
             {
@@ -29,7 +29,7 @@
                 el = el.parentNode;
             }
 
-            //autoset key property on pages
+            //autoset key/nested property on pages
             var pages = this.queryAllEffectiveChildren('my-accordion-page');
             for (var i = 0; i < pages.length; i++) {
                 pages[i].set('key', i + 1);
@@ -37,7 +37,7 @@
             }
         },
 
-        heard: function (e, detail, sender) {
+        onPageSelected: function (e, detail, sender) {
             console.log('heard selected event - ' + detail.key);
             //first, check to see if we just toggled a new page...
             if (this.selected != detail.key) {
@@ -64,11 +64,9 @@
                 //affect the scroll positioning.
                 if (scrollPage) {
                     //scroll the toggled page to the top of the screen
-                    this.async(function () {
                     var rect = this.absolutePosition(scrollPage); // selPage.getBoundingClientRect();
                     console.log('Scrolling page ' + (pageIndex + 1) + ' to top. window.scrollTo(0, ' + +rect.top + ')');
                     window.scrollTo(0, rect.top - 1);
-                    }, 300);                           
                 }
             }
             e.cancelBubble = true;            
@@ -79,16 +77,21 @@
         },
 
         closeAll: function () {
-            
-            this.async(this.closeAllAsync, 100);
-        },
-
-        closeAllAsync: function () {        
             console.log('closeAll called...');
             var pages = this.queryAllEffectiveChildren('my-accordion-page');
             for (var i = 0; i < pages.length; i++) {
                 pages[i].set('isOpened', false);
             }
+            //clear the selected status of this accordion.
+            //Necessary for the following sequence if
+            //this is a nested accordion
+            //1: Page X is selected
+            //2: The parent page is closed because a 
+            //   sibling was selected.
+            //3: The parent page is reopened.
+            //4: Page X is selected again, before
+            //   selecting any other pages.
+            this.set('selected', -1);
         },
 
         absolutePosition: function (el) {

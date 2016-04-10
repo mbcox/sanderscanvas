@@ -1,5 +1,4 @@
-﻿
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+﻿<link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
 <!--<link rel="import" href="../../bower_components/paper-button/paper-button.html">-->
 <link rel="import" href="../../styles/shared-styles.html" />
@@ -9,7 +8,7 @@
         <style is="custom-style" include="shared-styles"></style>
         <div id="mainDiv" class$="{{getCssClass(nested)}}">
             <iron-selector attr-for-selected="name" selected="{{selected}}">
-                <div on-selected="heard">
+                <div on-selected="onPageSelected">
                     <content></content>
                 </div>
             </iron-selector>

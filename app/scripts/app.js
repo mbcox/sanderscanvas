@@ -96,4 +96,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.onSelected = function (e, detail, sender) {
       app.selected = detail.key;
   };
+
+  app.updateSite = function (event) {
+      window.location.reload(true);
+  }
+
+  window.applicationCache.addEventListener('updateready', app.updatesite, false);    
 })(document);
