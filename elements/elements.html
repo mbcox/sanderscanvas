@@ -9282,6 +9282,15 @@ this.fire('dom-change');
       },
 
       /**
+       * Default fallback if the selection based on selected with `attrForSelected`
+       * is not found.
+       */
+      fallbackSelection: {
+        type: String,
+        value: null
+      },
+
+      /**
        * The list of items from which a selection can be made.
        */
       items: {
@@ -9311,7 +9320,8 @@ this.fire('dom-change');
 
     observers: [
       '_updateAttrForSelected(attrForSelected)',
-      '_updateSelected(selected)'
+      '_updateSelected(selected)',
+      '_checkFallback(fallbackSelection)'
     ],
 
     created: function() {
@@ -9397,6 +9407,12 @@ this.fire('dom-change');
       return this.selected != null;
     },
 
+    _checkFallback: function() {
+      if (this._shouldUpdateSelection) {
+        this._updateSelected();
+      }
+    },
+
     _addListener: function(eventName) {
       this.listen(this, eventName, '_activateHandler');
     },
@@ -9418,7 +9434,7 @@ this.fire('dom-change');
 
     _updateAttrForSelected: function() {
       if (this._shouldUpdateSelection) {
-        this.selected = this._indexToValue(this.indexOf(this.selectedItem));        
+        this.selected = this._indexToValue(this.indexOf(this.selectedItem));
       }
     },
 
@@ -9428,6 +9444,11 @@ this.fire('dom-change');
 
     _selectSelected: function(selected) {
       this._selection.select(this._valueToItem(this.selected));
+      // Check for items, since this array is populated only when attached
+      // Since Number(0) is falsy, explicitly check for undefined
+      if (this.fallbackSelection && this.items.length && (this._selection.get() === undefined)) {
+        this.selected = this.fallbackSelection;
+      }
     },
 
     _filterItem: function(node) {
@@ -9646,7 +9667,7 @@ this.fire('dom-change');
         Polymer.IronSelectableBehavior._updateAttrForSelected.apply(this);
       } else if (this._shouldUpdateSelection) {
         this.selectedValues = this.selectedItems.map(function(selectedItem) {
-          return this._indexToValue(this.indexOf(selectedItem));        
+          return this._indexToValue(this.indexOf(selectedItem));
         }, this).filter(function(unfilteredValue) {
           return unfilteredValue != null;
         }, this);
@@ -9669,6 +9690,13 @@ this.fire('dom-change');
         // select only those not selected yet
         for (var i = 0; i < selectedItems.length; i++) {
           this._selection.setItemSelected(selectedItems[i], true);
+        }
+        // Check for items, since this array is populated only when attached
+        if (this.fallbackSelection && this.items.length && !this._selection.get().length) {
+          var fallback = this._valueToItem(this.fallbackSelection);
+          if (fallback) {
+            this.selectedValues = [this.fallbackSelection];
+          }
         }
       } else {
         this._selection.clear();
@@ -9693,7 +9721,6 @@ this.fire('dom-change');
       } else {
         this.splice('selectedValues',i,1);
       }
-      this._selection.setItemSelected(this._valueToItem(value), unselected);
     },
 
     _valuesToItems: function(values) {
@@ -9735,6 +9762,20 @@ this.fire('dom-change');
         <div name="bar">Bar</div>
         <div name="zot">Zot</div>
       </iron-selector>
+
+  If no matching element is found using `attForSelected`, use `fallbackSelection` as fallback.
+
+  Example:
+
+        <iron-selector attr-for-selected="name" selected="non-existing"
+                       fallback-selection="default">
+          <div name="foo">Foo</div>
+          <div name="bar">Bar</div>
+          <div name="default">Default</div>
+        </iron-selector>
+
+  Note: When the selector is multi, the selection will set to `fallbackSelection` iff
+  the number of matching elements is zero.
 
   `iron-selector` is not styled. Use the `iron-selected` CSS class to style the selected element.
 
@@ -9888,7 +9929,7 @@ this.fire('dom-change');
 
       this._updateTransition(false);
       // If we can animate, must do some prep work.
-      if (animated && !this.noAnimation) {
+      if (animated && !this.noAnimation && this._isDisplayed) {
         // Animation will start at the current size.
         var startSize = this._calcSize();
         // For `auto` we must calculate what is the final size for the animation.
@@ -9957,6 +9998,19 @@ this.fire('dom-change');
       this.toggleClass('iron-collapse-opened', this.opened);
       this._updateTransition(false);
       this.notifyResize();
+    },
+
+    /**
+     * Simplistic heuristic to detect if element has a parent with display: none
+     *
+     * @private
+     */
+    get _isDisplayed() {
+      var rect = this.getBoundingClientRect();
+      for (var prop in rect) {
+        if (rect[prop] !== 0) return true;
+      }
+      return false;
     },
 
     _calcSize: function() {
@@ -12814,9 +12868,9 @@ this.fire('dom-change');
             }
 
             .collapse-content {
-            padding: 15px;           
-            /*min-height: 100px;          */
-            text-align:center;
+                padding: 15px;                       
+                text-align:center;
+                overflow-wrap: break-word;
             }    
             .drawerLink {
                 text-decoration: none;
